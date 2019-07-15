@@ -1,0 +1,11 @@
+
+<app-navigator-menu class="ultima-menu ultima-main-menu clearfix"
+                    [item]="data"
+                    root="true"
+                    visible="true"
+                    *ngIf="!isHierarchicalNavigator">
+</app-navigator-menu>
+
+
+<app-navigator-tree *ngIf="isHierarchicalNavigator"
+                    [selected]="treeSelected"></app-navigator-tree>

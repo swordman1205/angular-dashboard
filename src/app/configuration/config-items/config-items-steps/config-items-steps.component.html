@@ -1,0 +1,260 @@
+<p-dialog #dialog [header]='dialHeader' [(visible)]="flgDisplayDlg" [modal]="true" [responsive]="true" [width]="550"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000" (onHide)='updateAllSteps($event)'>
+    <p-header>
+        <div class="p-grid">
+            <button type="button" pButton icon="far fa-sync-alt" pTooltip="Refresh" (click)='refresh()'></button>
+            <button type="button" pButton icon="fal fa-save" pTooltip="Save" (click)='save()'></button>
+            <!-- <button type="button" pButton icon="pi pi-close" pTooltip="Close" class="ui-button-secondary" (click)='dialog.visible=false'></button> -->
+        </div>
+    </p-header>
+    <p-table *ngIf='dialogType === dialogTypes.CHECK_STEPS' #tblSteps appendTo="body" [value]="checkSteps"
+        selectionMode="single" dataKey='ID' filter='true' [(selection)]="selStep" [responsive]="true"
+        (onRowSelect)='stepRowSelected($event)' (onRowUnselect)='stepRowUnselected($event)'
+        [globalFilterFields]="['Name']">
+        <ng-template pTemplate="caption">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter"
+                (input)="tblSteps.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 45px"></th>
+                <th style="width: 85px">Select</th>
+                <th>Name</th>
+                <th>Check Type</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+                <td></td>
+                <td>
+                    <p-checkbox binary="true" [(ngModel)]="rowData['Selected']"
+                        (onChange)='stepChckChanged($event, rowData)'></p-checkbox>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setStepNameEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['NameInEdit']">{{rowData['Name']}}</label>
+                        <input type="text" pInputText *ngIf="rowData['NameInEdit']" [(ngModel)]="rowData['Name']"
+                            (input)='dirtifyStep($event, rowData)'>
+                    </div>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setStepChkTypeEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['CheckTypeInEdit']">{{rowData['CheckType']}}</label>
+                        <p-dropdown *ngIf="rowData['CheckTypeInEdit']" [options]="chkTypeOptions"
+                            [(ngModel)]="rowData['CheckType']" (onChange)='dirtifyStep($event, rowData)'></p-dropdown>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-table *ngIf='dialogType === dialogTypes.CHECK_THRESHOLDS' #tblThreshld appendTo="body" [value]="thresholds"
+        selectionMode="single" dataKey='ID' filter='true' [(selection)]="selThreshold" [responsive]="true"
+        (onRowSelect)='threshldRowSelected($event)' (onRowUnselect)='threshldRowUnselected($event)'
+        [globalFilterFields]="['FromValue', 'ToValue']">
+        <ng-template pTemplate="caption">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter"
+                (input)="tblThreshld.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 100px"></th>
+                <th>Select</th>
+                <th>From Value</th>
+                <th>To Value</th>
+                <th>Corrective Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+                <td></td>
+                <td>
+                    <p-checkbox binary="true" [(ngModel)]="rowData['Selected']"
+                        (onChange)='thresholdChckChanged($event, rowData)'></p-checkbox>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setThresholdsFromEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['FromValInEdit']">{{rowData['FromValue']}}</label>
+                        <input type="text" pInputText *ngIf="rowData['FromValInEdit']" [(ngModel)]="rowData['LowValue']"
+                            (input)='dirtifyThreshold($event, rowData)'>
+                    </div>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setThresholdsToEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['ToValInEdit']">{{rowData['ToValue']}}</label>
+                        <input type="text" pInputText *ngIf="rowData['ToValInEdit']" [(ngModel)]="rowData['HighValue']"
+                            (input)='dirtifyThreshold($event, rowData)'>
+                    </div>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setThresholdsActsEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['ActsInEdit']">{{getThreshldActions(rowData)}}</label>
+                        <p-button type="button" *ngIf="rowData['ActsInEdit']" label='Edit'></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-table *ngIf='dialogType === dialogTypes.CHECK_CHOICES' #tblChoices appendTo="body" [value]="choices"
+        selectionMode="single" dataKey='ID' filter='true' [(selection)]="selChoice" [responsive]="true"
+        (onRowSelect)='choiceRowSelected($event)' (onRowUnselect)='choiceRowUnselected($event)'
+        [globalFilterFields]="['Name']">
+        <ng-template pTemplate="caption">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter"
+                (input)="tblSteps.filterGlobal($event.target.value,'contains')" style="width:auto">
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 100px"></th>
+                <th>Select</th>
+                <th>Name</th>
+                <th>Corrective Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+                <td></td>
+                <td>
+                    <p-checkbox binary="true" [(ngModel)]="rowData['Selected']"
+                        (onChange)='choiceChckChanged($event, rowData)'></p-checkbox>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setChoicesNameEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['NameInEdit']">{{rowData['Name']}}</label>
+                        <input type="text" pInputText *ngIf="rowData['NameInEdit']" [(ngModel)]="rowData['Name']"
+                            (input)='dirtifyChoice($event, rowData)'>
+                    </div>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setChoicesActsEditMode($event, rowData)'>
+                        <label *ngIf="!rowData['ActsInEdit']">{{getChoiceActions(rowData)}}</label>
+                        <p-button type="button" *ngIf="rowData['ActsInEdit']" label='Edit'></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-footer>
+        <button type="button" pButton label="Add Step" (click)='add()'></button>
+        <button type="button" pButton label="Remove Step" (click)='remove()'></button>
+    </p-footer>
+</p-dialog>
+
+<div class='config-items-steps' *ngIf='checkItem'>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="p-grid">
+            <p-table [value]="itemSteps" selectionMode="single" dataKey='ID' [(selection)]="selItemStep"
+                [responsive]="true" (onRowSelect)='rowSelected($event)' (onRowUnselect)='rowUnselected($event)'>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width: 45px"></th>
+                        <th pSortableColumn="DisplayIndex" style="width: 75px">#
+                            <p-sortIcon field="DisplayIndex"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Name">Name
+                            <p-sortIcon field="Name"></p-sortIcon>
+                        </th>
+                        <th>Check Type</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+                    <tr [pSelectableRow]="rowData">
+                        <td><i class='fas fa-shoe-prints'></i></td>
+                        <td>{{rowData.RowState === rowStates.DELETED ? '' : rowData.DisplayIndex + 1}}</td>
+                        <td>{{rowData.Name}}</td>
+                        <td>{{rowData.CheckType}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="p-grid buttons-container">
+            <div class="p-col" style='width: 125px'>
+                <button pButton type="button" label="Edit" (click)='editStep()'></button>
+            </div>
+            <div class="p-col"></div>
+            <div class="p-col-4">
+                <div class="p-grid">
+                    <button type="button" pButton icon="fa fa-angle-up" [disabled]="upDisabled" pTooltip='Up'
+                        (click)='moveStepUp($event)'></button>
+                    <button type="button" pButton icon="fa fa-angle-down" [disabled]="downDisabled" pTooltip='Down'
+                        (click)='moveStepDown($event)'></button>
+                    <button type="button" pButton label="Remove" (click)='removeStep()'></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-grid" *ngIf="stepType !== 'Multiple Choice'">
+            <p-table #tblStpThresh [value]="stepThresholds" selectionMode="single" dataKey='ID'
+                [(selection)]="selThreshold" [responsive]="true" [globalFilterFields]="['FromValue','ToValue']">
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER -->
+                    <div translate>Threshholds</div>
+                    <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter"
+                            (input)="tblStpThresh.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 45px"></th>
+                        <th>From Value</th>
+                        <th>To Value</th>
+                        <th>Corrective Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+                    <tr [pSelectableRow]="rowData">
+                        <td><i class='fas fa-stream'></i></td>
+                        <td>{{rowData['FromValue']}}</td>
+                        <td>{{rowData['ToValue']}}</td>
+                        <td>{{getThreshldActions(rowData)}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="p-grid" *ngIf="stepType === 'Multiple Choice'">
+            <p-table #tblChoices [value]="stepChoices" selectionMode="single" dataKey='ID' [(selection)]="selChoice"
+                [responsive]="true" [globalFilterFields]="['Name']">
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER -->
+                    <div translate>Choices</div>
+                    <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter"
+                            (input)="tblChoices.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 45px"></th>
+                        <th pSortableColumn="Name">Form Name
+                            <p-sortIcon field="Name"></p-sortIcon>
+                        </th>
+                        <th>Corrective Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+                    <tr [pSelectableRow]="rowData">
+                        <td><i class='fas fa-clipboard-check'></i></td>
+                        <td>{{rowData['Name']}}</td>
+                        <td>{{getChoiceActions(rowData)}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="buttons-container">
+            <div class="p-col-6">
+                <button pButton type="button" label="Edit" (click)='editThreshldChoice()'></button>
+            </div>
+            <div class="p-col-6">
+                <button pButton type="button" label="Remove" (click)='removeThreshldChoice()'></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class='container' *ngIf='treeNode' style="background: blueviolet">
+    <div class="p-grid" style="margin: 10px 0px; height: 100%;">
+
+        <div class="p-col-3" style="margin: 10px 0px">
+            <p-table [value]="lstRouteRcds" selectionMode="single" [paginator]="true" [rows]="10">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Route Records</th>
+                        <th style="width: 45px;">#</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record>
+                    <tr>
+                        <td>{{record.TimeStamp | date:'medium'}}</td>
+                        <td>{{record.RecordsCount}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="p-grid" style="margin: 15px 5px">
+                <div class="p-col-3">
+                    <label for="rtFilter">Filter: </label>
+                </div>
+                <div class="p-col">
+                    <p-dropdown id="rtFilter" [options]="fltOptions" [(ngModel)]="selFilter"
+                        (onChange)='filterRecords()'></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-9" style="margin: 10px 0px; background: yellow">
+
+        </div>
+    </div>
+</div>

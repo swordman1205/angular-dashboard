@@ -1,0 +1,51 @@
+<p-dialog *ngIf='checkItem' header="Item Images" [(visible)]="flgDisplayDlg" [modal]="true" [responsive]="true" [width]="350"
+    [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <!-- <p-galleria [images]="checkItemImages" panelWidth="425" panelHeight="313" [showCaption]="true" (onImageClicked)='imageSelected($event)'></p-galleria> -->
+    <!-- <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="onDialogOK($event)" label="OK"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="flgDisplayDlg=false" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer> -->
+</p-dialog>
+
+
+<div class='p-grid container' *ngIf='checkItem'>
+
+    <!--  Left Cube -->
+    <div class="p-col-6 cube" style="margin: 10px 0px">
+
+        <!-- Name -->
+        <div class="p-grid">
+            <div class="p-col">
+                <label for="name">Name *</label>
+            </div>
+            <div class="p-col">
+                <input id="name" type="text" pInputText [(ngModel)]="checkItem.Name" pKeyFilter="alphanum" (change)='onDirtify()'>
+                <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="p-grid">
+            <div class="p-col">
+                <label for="descrip">Description</label>
+            </div>
+            <div class="p-col">
+                <textarea pInputTextarea id="descrip" [(ngModel)]="checkItem.Description" (change)='onDirtify()'></textarea>
+                <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+            </div>
+        </div>
+    </div>
+
+    <!--  Right Cube -->
+    <div class="p-col-6 cube" style="margin: 10px 0px">
+        <div class="p-grid">
+            <img [src]="imgPath" style='width: 275px; height: 275px;'> <br/>
+        </div>
+
+        <div class="p-grid buttons-container">
+            <button pButton type="button " label="Browse" (click)='browseImage()'></button>
+            <button pButton type="button " label="Delete" (click)='deleteImage()'></button>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,30 @@
+li {
+  list-style-type: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 3px;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  height: 130px;
+}
+
+ul {
+  overflow-y: auto;
+  flex-basis: 240px;
+  flex-shrink: 0;
+  padding-right: 10px;
+  padding-left: 0;
+}
+
+.ui-widget-content {
+  overflow-y: auto;
+}

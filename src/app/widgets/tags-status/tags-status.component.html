@@ -1,0 +1,27 @@
+<!--<div class="fl-header">
+  <H3 translate class="fl-widget-header">WIDGETS.OPEN_TICKETS.TITLE</H3>
+
+  <button (click)="getData()" translate class="fl-refresh-btn">
+    <i class="far fa-sync-alt"></i>
+  </button>
+</div>-->
+
+<!--<p-blockUI [target]="charts" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute;top:48%;left:50%"></i>
+</p-blockUI>-->
+
+<div class="chart-container">
+    <!--<app-blocker #charts>-->
+        <p-chart *ngIf="isActiveAlarmsData" type="doughnut" [data]="activeAlarmsData"
+                 [options]="options"></p-chart>
+        <div class="label-container" *ngIf="!isActiveAlarmsData && !loading">
+            <div class="no-active-label">No Active Alarms</div>
+        </div>
+
+        <p-chart *ngIf="isOpenTicketsData" type="doughnut" [data]="openTicketsData"
+                 [options]="options"></p-chart>
+        <div class="label-container" *ngIf="!isOpenTicketsData && !loading">
+            <div class="no-active-label">No Open Tickets</div>
+        </div>
+    <!--</app-blocker>-->
+</div>

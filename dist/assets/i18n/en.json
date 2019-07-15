@@ -1,0 +1,345 @@
+{
+  "ABOUT": "E-Control Systems is the industry leader in complete wireless temperature monitoring systems. The system is designed to meet strict regulatory compliance including The Joint Commission, HACCP, AABB, GLP/GMP, FCC, and FDA. Custom tailored to suit all needs, ECS provides you with a snapshot of your entire operation, which can be viewed 24/7 from any computer, smart phone, or tablet, including an iPhone, iPod, iPad, or Android device. All of your data is stored in our secure private cloud with server redundancy and automated system backups, making sure that your valuable data is never lost. Rest assured at night knowing that we’re there safeguarding your product when you are not.",
+  "DEFAULTS": {
+    "DISABLED": "Disabled",
+    "N/A": "N/A",
+    "YES": "Yes",
+    "NO": "No"
+  },
+  "COMMON": {
+    "LAST_UPDATED": "Last Updated On",
+    "CUSTOM": "Custom",
+    "EXECUTE": "Execute",
+    "FROM": "From",
+    "TO": "To",
+    "ALARM_LOW_THRESHOLD": "Alarm Low Threshold",
+    "ALARM_HIGH_THRESHOLD": "Alarm High Threshold",
+    "WARNING_LOW_THRESHOLD": "Warning Low Threshold",
+    "WARNING_HIGH_THRESHOLD": "Warning High Threshold",
+    "BACK": "Back",
+    "CANCEL": "Cancel",
+    "SAVE": "Save"
+  },
+  "DASHBOARDS": {
+    "DASHBOARD": "DASHBOARD",
+    "TICKETS": "TICKETS",
+    "ALARMS": "ALARMS"
+  },
+  "DASHBOARD": {
+    "STATUS_CHANGE_TITLE": "Status Change",
+    "LOCATION_STATUS_CHANGE_DESCRIPTION": "Location: \"{{name}}\" changed its status from {{oldStatus}} to {{newStatus}}",
+    "ASSET_STATUS_CHANGE_DESCRIPTION": "Asset: \"{{name}}\" changed its status from {{oldStatus}} to {{newStatus}}",
+    "ASSET_MEASURE_STATUS_CHANGE_DESCRIPTION": "Asset Measure: \"{{name}}\" changed its status from {{oldStatus}} to {{newStatus}}"
+  },
+  "TOPBAR": {
+    "LOGOUT": "Log Out",
+    "SETTINGS": "Settings",
+    "APP_VERSION": "App Version {{version}}",
+    "DB_VERSION": "DB Version {{version}}"
+  },
+  "SETTINGS": {
+    "TITLE": "General Settings",
+    "TREE": "Hierarchical Navigator",
+    "TAGS": "Tags",
+    "TAGS_SETTINGS": {
+      "LOCATION_TAGS": "Location Tags",
+      "ASSET_TAGS": "Asset Tags",
+      "TYPE": "Type",
+      "NAME": "Name",
+      "CLEAR": "Clear"
+    }
+  },
+  "WIDGETS": {
+    "REFRESH": "Refresh",
+    "EXPORT": "Export",
+    "SAVE": "Save",
+    "EDIT": "Edit",
+    "BREADCRUMBS": {
+      "TAGS": "Tags"
+    },
+    "DOCUMENTS": {
+      "TITLE": "Documents",
+      "COLUMNS": {
+        "NAME": "Name",
+        "SIZE": "Size"
+      }
+    },
+    "LOCATION_STATUS": {
+      "TITLE": "Status",
+      "TOTAL_ROWS": "Total {{rows}} statuses",
+      "COLUMNS": {
+        "LOCATION": "Location",
+        "ASSET": "Asset",
+        "MEASURE": "Measure",
+        "STATUS": "Status",
+        "TIME": "Time"
+      }
+    },
+    "ACTIVITY": {
+      "TITLE": "Activity",
+      "TOTAL_ROWS": "Total {{rows}} activities",
+      "COLUMNS": {
+        "USER": "User",
+        "ACTION": "Action",
+        "ITEM": "Item",
+        "TIME": "Time"
+      }
+    },
+    "TICKET_LIST": {
+      "TITLE": "Tickets",
+      "OPEN_TICKETS": "Open Tickets",
+      "ALL_TICKETS": "All Tickets",
+      "TOTAL_ROWS": "Total {{rows}} tickets",
+      "COLUMNS": {
+        "TICKET_NUMBER": "Ticket #",
+        "LOCATION": "Location",
+        "ASSET_DEVICE": "Asset/Device",
+        "ALERT_TIME": "Alert Time",
+        "TICKET_REASON": "Ticket Reason",
+        "TICKET_CAUSE": "Ticket Cause",
+        "TICKET_ACTION": "Ticket Action",
+        "CREATED_ON": "Created On",
+        "CLOSED_ON": "Closed On",
+        "ACK": "Ack."
+      }
+    },
+    "ALARM_LIST": {
+      "TITLE": "Alarms",
+      "TOTAL_ROWS": "Total {{rows}} alarms",
+      "COLUMNS": {
+        "LOCATION": "Location",
+        "ASSET": "Asset",
+        "ASSET_MEASURE": "Asset Measure",
+        "STARTED_ON": "Started On",
+        "LAST_CHECK": "Last Check",
+        "LAST_VALUE": "Last Value",
+        "DURATION": "Duration",
+        "STATUS": "Status"
+      }
+    },
+    "ACTIVE_ALARMS": {
+      "TITLE": "Active Alarms"
+    },
+    "OPEN_TICKETS": {
+      "TITLE": "Open Tickets"
+    },
+    "ASSET_MEASURES_CHART": {
+      "TITLE": "Asset Measures",
+      "LAST_DAY": "Last Day",
+      "LAST_WEEK": "Last Week",
+      "LAST_MONTH": "Last Month",
+      "CUSTOM_TIME": "Custom Time",
+      "CUSTOM_TIME_EXECUTE": "Execute",
+      "TIME_IS_TOO_LONG": "Period of time is too long (Max {{days}} days)",
+      "TIME_TO_IS_BIGGER_THAN_FROM": "\"To\" is bigger than \"From\"",
+      "TIME_IS_IN_THE_FUTURE": "Requested time is in the future",
+      "TIME_ERROR": "Custom time is not valid"
+    },
+    "LOCATION_INFORMATION": {
+      "TITLE": "Information",
+      "GENERAL": "General",
+      "ADDRESS": "Address",
+      "CONTACT": "Contact Details",
+      "MISC": "Misc",
+      "NAME": "Name",
+      "TIME_ZONE": "Time Zone",
+      "COMMENTS": "Comments",
+      "STREET": "Street",
+      "CITY": "City",
+      "STATE": "State",
+      "POSTAL_CODE": "Postal Code",
+      "COUNTRY": "Country",
+      "ADDRESS_NOTES": "Address Notes",
+      "CS_NUMBER": "CS Number",
+      "PHONE1": "Phone 1",
+      "PHONE2": "Phone 2",
+      "MOBILE_PHONE": "Mobile Phone",
+      "FAX": "Fax",
+      "PRIMARY_EMAIL": "Primary E-Mail",
+      "EMAIL2": "E-Mail 2",
+      "EMAIL3": "E-Mail 3",
+      "URL": "URL",
+      "LDAP_GROUP": "LDAP Group"
+    }
+  },
+  "_STATUS_VIEW_": {
+    "_NOT_DEFINED_": "Not Defined",
+    "_NOT_AVAILABLE_": "N/A",
+    "_OK_": "OK",
+    "_SNOOZE_": "Snooze",
+    "_BYPASS_": "Bypass",
+    "_ACK_WARNING_": "Acknowledge Warning",
+    "_ACK_CRITICAL_": "Acknowledge Critical",
+    "_ACK_FAULT_": "Acknowledge Fault",
+    "_ACK_FAULT_OPEN_": "Acknowledge Fault Open",
+    "_ACK_FAULT_SHORTED_": "Acknowledge Fault Shorted",
+    "_ACK_FAULT_COMM_": "Acknowledge Fault Communication",
+    "_ACK_DISCONNECTED_": "Acknowledge Disconnected",
+    "_WARNING_": "Warning",
+    "_CRITICAL_": "Critical",
+    "_FAULT_": "Fault",
+    "_FAULT_OPEN_": "Fault Open",
+    "_FAULT_SHORTED_": "Fault Shorted",
+    "_FAULT_COMM_": "Fault Communication",
+    "_DISCONNECTED_": "Disconnected"
+  },
+  "STATUS_CODE": {
+    "_NOT_DEFINED_": "Not Defined",
+    "_NOT_AVAILABLE_": "N/A",
+    "_OK_": "OK",
+    "_WARNING_": "Warning",
+    "_CRITICAL_": "Critical",
+    "_FAULT_": "Fault",
+    "_FAULT_OPEN_": "Fault Open",
+    "_FAULT_SHORTEN_": "Fault Shorten",
+    "_FAULT_COMM_": "Fault Communication",
+    "_DISCONNECTED_": "Disconnected",
+    "_ROUTER_DISCONNECTED_": "Router Disconnected",
+    "_ROUTER_CHARGING_FAULT_": "Router Charging Fault",
+    "_ROUTER_POWER_ALERT_": "Router Power Alert",
+    "_ESCALATION_OK_": "Escalation OK",
+    "_ESCALATION_WARNING_": "Escalation Warning",
+    "_ESCALATION_ALARM_": "Escalation Alarm"
+  },
+  "LOGIN": {
+    "HEADER": "An enterprise, web-based, paperless solution and software package",
+    "SUB_HEADER": "Communicates and manages Intellisense™ and Intellicheck™ devices",
+    "USER": "User",
+    "PASSWORD": "Password",
+    "BUTTON": "LOGIN",
+    "ACCOUNT_VERIFICATION_REQUIRED_TITLE": "Account Verification Required",
+    "ACCOUNT_VERIFICATION_REQUIRED_DESCRIPTION": "You must verify your account before logging in. Please check your email for an activation link before trying to log in. ",
+    "ACCOUNT_LOCKED_TITLE": "Account Locked",
+    "ACCOUNT_LOCKED_DESCRIPTION": "Account has been locked. Please notify a manager to get your account unlocked.",
+    "FAIL_TITLE": "Login failed",
+    "FAIL_DESCRIPTION": "Invalid username or password",
+    "FAIL_GENERAL_DESCRIPTION": "Something went wrong!",
+    "CHANGE_PASSWORD_HEADER": "Change Password",
+    "CHANGE_PASSWORD_CURRENT_PASSWORD": "Current Password",
+    "CHANGE_PASSWORD_NEW_PASSWORD": "New Password",
+    "CHANGE_PASSWORD_RETYPE_NEW_PASSWORD": "Retype New Password",
+    "CHANGE_PASSWORD_BUTTON": "Update",
+    "REQUIRED": "Required",
+    "NEW_PASSWORD_PATTERN": "Password doesn't meet rules. See tooltip for rules",
+    "NEW_PASSWORD_PATTERN_TOOLTIP": "At least one Lower case letter. At least one Upper case letter. At least one numeric character. At least one special character such as @, #, $, etc.",
+    "NEW_PASSWORD_MIN_LENGTH": "Password length minimum is required",
+    "RETYPE_NEW_PASSWORD_NOT_MATCH": "Your new password is not match"
+  },
+  "WEEK_DAYS": {
+    "MON": "Monday",
+    "TUE": "Tuesday",
+    "WED": "Wednesday",
+    "THU": "Thursday",
+    "FRI": "Friday",
+    "SAT": "Saterday",
+    "SUN": "Sunday"
+  },
+  "CONFIGS": {
+    "INFO": "Information",
+    "DEVICES": "Devices",
+    "ITEMS": "Items",
+    "FORMS": "Forms",
+    "ALARM_TYPES": "Alarm Types",
+    "ALERT_TYPES": "Alert Types",
+    "ALERTS": "Alerts",
+    "ASSET_TYPES": "Asset Types",
+    "ASSETMEASURE_TYPES": "AssetMeasure Types",
+    "MAINTENANCE": "Maintenance",
+    "TICKETS": "Tickets",
+    "PERMISSIONS": "Permissions",
+    "INTELLITASKS": "IntelliTasks"
+  },
+  "CONFIG_DEVICES": {
+    "INFORMATION": "Information",
+    "MEASUREMENTS": "Measurements",
+    "INTELLICHECK": "IntelliCheck Sync",
+    "ROUTERS": "Routing",
+    "PAIR_STATUS": {
+      "UNDEFINED": "Undefined",
+      "PAIRREQUESTED": "Pair Requested",
+      "PAIRING": "Pairing",
+      "PAIRED": "Paired",
+      "TIMEDOUT": "Timed Out"
+    },
+    "MESH_ROUTER_TYPE": {
+      "COOR": "Coordinator",
+      "ROUTER": "Router",
+      "END_DEVICE": "End Device"
+    },
+    "MODEL_NUMBER_FLAGS": {
+      "CHECK_TRIG_IO_1": "Trig IO Change In 1",
+      "CHECK_TRIG_IO_3": "Trig IO Change In 3"
+    },
+    "MESSAGES": {
+      "RESET_SECPAIR": "Attempt to reset device security token has failed"
+    },
+    "TITLES": {
+      "RESET_SECPAIR": "Rest Device Security Pairing"
+    }
+  },
+  "CONFIG_ITEMS": {
+    "INFORMATION": "Information",
+    "STEPS": "Steps",
+    "INTELLITASK_RULES": "IntelliTask Rules"
+  },
+  "CONFIG_ALARM_TYPES": {
+    "DEFAULT_DELAY": "Delay (min.)",
+    "DEFAULT_BYPASS": "Bypass",
+    "CUSTOM_DELAY": "Delay (min.)",
+    "CUSTOM_BYPASS": "Bypass"
+  },
+  "CONFIG_FORMS": {
+    "INFORMATION": "Information",
+    "ITEMS": "Items"
+  },
+  "CONFIG_ASM_TYPES": {
+    "TITLES": {
+      "WARN_HIGH_LOW_TITLE": "Warnings",
+      "ALARM_HIGH_LOW_TITLE": "Alarms",
+      "WARN_WAEN_HIGH_TITLE": "Warnings",
+      "WARN_LOW_ALARM_LOW_TITLE": "Alarms"
+    },
+    "MESSAGES": {
+      "WARN_HIGH_LOW_MSG": "WarningHigh value MUST be greater than WarningLow",
+      "ALARM_HIGH_LOW_MSG": "AlarmHigh value MUST be greater than AlarmLow",
+      "WARN_WAEN_HIGH_MSG": "AlarmHigh value MUST be greater than WarningHigh",
+      "WARN_LOW_ALARM_LOW_MSG": "WarningLow value MUST be greater than AlarmLow"
+    }
+  },
+  "CONFIG_PREV_MAINTS": {
+    "REPEAT_INTERVAL": {
+      "ONCE": "Once",
+      "DAILY": "Daily",
+      "WEEKLY": "Weekly",
+      "MONTHLY": "Monthly",
+      "QUARTERLY": "Quarterly",
+      "YEARLY": "Yearly"
+    }
+  },
+  "INTELLITASKS": {
+    "DEL_TEMP_TITLE": "Delete IntelliTask template",
+    "DEL_TEMP_MSG": "Are you sure you want to delete the current IntelliTask template?"
+  },
+  "REPORTS": {
+    "REPORT_LIST": {
+      "LABEL": "Report",
+      "RPT_ID": "ID",
+      "VIRTUAL": "V.N",
+      "RPT_HEADER": "Report",
+      "CREATE_DATE": "Create Date",
+      "START_DATE": "Start Date",
+      "END_DATE": "End Date",
+      "STATUS": "Status",
+      "DOWNLOADING": "Downloading",
+      "SAVE": "Save",
+      "OPEN": "Open"
+    },
+    "MESSAGES": {
+      "TIME_SPAN_ERROR_1": "Dates span should not exceed ",
+      "TIME_SPAN_ERROR_2": " days",
+      "TIME_SPAN_ERROR_TITLE": "Dates span error",
+      "EMPTY_ASSET_TAGS_LIST": "Can't generate tagged assets report for empty assets list",
+      "EMPTY_ASSET_TAGS_LIST_TITLE": "Tagged Asset Report Error"
+    }
+  }
+}

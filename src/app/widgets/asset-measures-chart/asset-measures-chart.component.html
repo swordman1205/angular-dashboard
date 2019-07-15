@@ -1,0 +1,26 @@
+<p-blockUI [target]="assetMeasuresChart" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 55%; left: 43%;"></i>
+</p-blockUI>
+
+<button type="button" pButton icon="far fa-sync-alt" class="auto_refresh_btn" (click)="onTimeChange()"
+        pTooltip="{{'WIDGETS.REFRESH' | translate}}"></button>
+
+<p-panel #assetMeasuresChart [header]="'WIDGETS.ASSET_MEASURES_CHART.TITLE' | translate">
+        <!--LAST X-->
+        <p-selectButton [options]="lastXTypes" [(ngModel)]="selectedXType" (onChange)="onTimeChange()"></p-selectButton>
+
+        <!-- CUSTOM -->
+        <span *ngIf="selectedXType <= 0" class="custom-time-padding">
+            <label translate class="custom-time">COMMON.FROM</label>
+            <p-calendar class="custom-time" [(ngModel)]="from" showTime="showTime" hourFormat="12"></p-calendar>
+            <label class="custom-time" translate>COMMON.TO</label>
+            <p-calendar class="custom-time" [(ngModel)]="to" showTime="showTime" hourFormat="12"></p-calendar>
+            <button class="custom-time" pButton type="button" (click)="onTimeChange()" icon="fa-check" iconPos="right"
+                    label="Click">
+                <span class="ui-button-text ui-c" translate>WIDGETS.ASSET_MEASURES_CHART.CUSTOM_TIME_EXECUTE</span>
+            </button>
+        </span>
+
+    <p-messages [(value)]="errorMessage"></p-messages>
+    <p-chart type="line" [data]="data" [options]="options"></p-chart>
+</p-panel>

@@ -1,0 +1,19 @@
+:host {
+  position: relative;
+}
+
+.chart-container {
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+.fl-header {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+:host /deep/ {
+  .highcharts-background {
+    fill: rgba(255, 255, 255, 0.0);
+  }
+}

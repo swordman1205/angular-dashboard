@@ -1,0 +1,192 @@
+<p-blockUI [target]="confgAlertTypes" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<app-blocker #confgAlertTypes>
+    <div class="alert-types-container">
+        <div class="list-container">
+            <p-listbox [options]="Items" [(ngModel)]="CurrECSObject" filter="true" dataKey='ID'>
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 5px" width="16">
+                        <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22"> -->
+                        <span style="text-align:left;padding:5px 5px 0 5px">{{item.value.Name}}</span>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+
+        <!-- Alert Types Info -->
+        <div class="details">
+            <div class="content" *ngIf='CurrECSObject'>
+
+                <!-- Upper Info panel -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+                        <!-- Serial Number -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-3">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="ui-grid-col-6">
+                                <input id="name" type="text" pInputText [(ngModel)]="CurrECSObject.Name" (change)='dirtifyItem()'>
+                                <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+                            </div>
+                        </div>
+
+                        <!-- Alarm Delay -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-3">
+                                <label>Alarm Delay</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="alarmDelayH" [step]=1 [min]=0 [(ngModel)]='alarmDelayH' (onChange)='alarmDelayChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <label>Hours, and </label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="alarmDelayM" [step]=1 [min]=0 [(ngModel)]='alarmDelayM' (onChange)='alarmDelayChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col">
+                                <label>Minutes</label>
+                            </div>
+                        </div>
+
+                        <!-- Send Interval -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-3">
+                                <label>Send Interval</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="sendIntrvlH" [step]=1 [min]=0 [(ngModel)]='sendIntrlH' (onChange)='sendIntrvlChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <label>Hours, and </label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="sendIntrvlM" [step]=1 [min]=0 [(ngModel)]='sendIntrlM' (onChange)='sendIntrvlChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col">
+                                <label>Minutes</label>
+                            </div>
+                        </div>
+
+                        <!-- Alarm Duration -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-3">
+                                <label>Alarm Duration</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="alarmDurH" [step]=1 [min]=0 [(ngModel)]='alarmDuratH' (onChange)='alarmDuratChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <label>Hours, and </label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-spinner id="alarmDurM" [step]=1 [min]=0 [(ngModel)]='alarmDuratM' (onChange)='alarmDuratChanged($event)'></p-spinner>
+                            </div>
+                            <div class="ui-grid-col">
+                                <label>Minutes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SPACE -->
+                <div class="ui-grid-col-12 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px"></div>
+
+
+                <!-- Lower CheckBoxes Group -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+                        <!-- Alarm Notification CheckBox -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">
+                                <label for="astAlarms">Alarm Notifications</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-checkbox binary="true" name="astAlarms" [(ngModel)]="CurrECSObject.AssetsAlarms"
+                                    (onChange)='dirtifyItem()'></p-checkbox>
+                            </div>
+                        </div>
+
+                        <!-- Device (Disconnect and Battery) Notification CheckBox -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">
+                                <label for="dvcAlarms">Disconnect & Battery Notifications</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-checkbox binary="true" name="dvcAlarms" [(ngModel)]="CurrECSObject.DevicesAlarms"
+                                    (onChange)='dirtifyItem()'></p-checkbox>
+                            </div>
+                        </div>
+
+                        <!-- Preventive Maintenance Notification CheckBox -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">
+                                <label for="prevMaintAlarms">Preventive Maintenance Notifications</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-checkbox binary="true" name="prevMaintNotify" [(ngModel)]="CurrECSObject.PreventiveMaintenance"
+                                    (onChange)='dirtifyItem()'></p-checkbox>
+                            </div>
+                        </div>
+
+                        <!-- MeshRouter Notification CheckBox -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">
+                                <label for="routAlarms">Alarm Notifications</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-checkbox binary="true" name="routAlarms" [(ngModel)]="CurrECSObject.RoutersAlarms"
+                                    (onChange)='dirtifyItem()'></p-checkbox>
+                            </div>
+                        </div>
+
+                        <!-- Data Change Notification CheckBox -->
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">
+                                <label for="alrmNotify">Data Change Notifications</label>
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p-checkbox binary="true" name="alrmNotify" [(ngModel)]="CurrECSObject.AuditAlarms"
+                                    (onChange)='dirtifyItem()'></p-checkbox>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <span class="md-inputfield align-this-end">
+                    <button pButton type="button" label="Add Alarm Type" (click)='addAlertType($event)'></button>
+                    <button pButton type="button" label="Remove Alarm Type" (click)='removeEcsObject($event)'></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</app-blocker>

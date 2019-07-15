@@ -1,0 +1,40 @@
+@import '../../../assets/sass/variables';
+
+.fl-nav-item {
+  cursor: pointer;
+
+  .ripplelink {
+    color: $sidebarNavColor;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+
+    .item-name {
+      width: 140px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 5px 0;
+    }
+  
+    fa-icon {
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+      display: block;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      border: 1px solid;
+    }
+
+    &:hover {
+      background-color: rgba($sidebarNavColor, .5);
+      color: $white;
+
+      fa-icon {
+        border-width: 2px;
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+$primaryColor: #2E3235;
+$primaryDarkColor: #424242;
+$primaryLightColor: #EEEEEE;
+
+$accentColor: #3FBA2A;
+
+$accentDarkColor: #D84315;
+$accentLightColor: #FFAB91;
+$accentTextColor: #ffffff;
+$darkMenuBgColor: #424242;
+$darkMenuHoverColor: #676767;
+$darkMenuRouterLinkActiveColor: #FF5722;
+$lightMenuRouterLinkActiveColor: #FF5722;
+$horizontalLightMenuRouterLinkActiveColor: #FF5722;
+
+@import '../../sass/layout/_layout';
+
+/* Google Open Sans */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/OpenSans-Regular.ttf");
+}
+
+/* Left side of top bar */
+.layout-container .topbar .topbar-left {
+  /*background-color: #2E3235;*/
+}
+
+body .ui-widget-content {
+  /*background-color: unset;*/
+  border: unset;
+}
+
+.layout-container .layout-menu {
+  /*background-color: #2E3235;*/
+  height: calc(100% - 75px);
+}
+
+.layout-container .ultima-menu li a {
+  color: #D8D8D8 !important;
+
+  &:hover {
+    color: #FFFFFF;
+  }
+}
+
+
+
+
+
+

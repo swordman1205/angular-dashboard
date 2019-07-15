@@ -1,0 +1,11 @@
+:host {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  /deep/ p-button button {
+    background-color: #E9E9E9;
+    color: #1c4153;
+    box-shadow: unset;
+    font-size: 25px;
+  }
+}

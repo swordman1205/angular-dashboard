@@ -1,0 +1,64 @@
+<div id="login-background"></div>
+<div class="main-login-container">
+    <p-dialog header="{{'LOGIN.CHANGE_PASSWORD_HEADER' | translate}}"
+              [(visible)]="isChangePasswordVisible" [style]="{width: '300px'}" [modal]="true">
+        <app-change-password
+            [dropPassValidation]="dropPassValidation"
+            [username]="user"
+            [shouldClearForm]="isChangePasswordVisible === true"
+        ></app-change-password>
+    </p-dialog>
+
+    <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+    <div class="fake-remember">
+        <input type="text" name="username" tabindex="-1"/>
+        <input type="password" name="password" tabindex="-1"/>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="login-container">
+        <img class="logo">
+        <p-progressSpinner *ngIf="this.isInLoginProcess"></p-progressSpinner>
+        <div class="login-description">{{'LOGIN.HEADER' | translate}}</div>
+        <div class="login-description-sub">{{'LOGIN.SUB_HEADER' | translate}}</div>
+        <div class="ui-g login-details">
+
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i
+                        class="fa fa-user input-icon-addons"></i></span>
+                <input id="userInput" type="text" placeholder="Username"
+                       autocomplete="off" autofocus (keyup.enter)="onSubmit()"
+                       [(ngModel)]="this.user" [disabled]="isInLoginProcess"
+                       placeholder="{{'LOGIN.USER' | translate}}">
+            </div>
+
+            <div class="ui-inputgroup pt36">
+                <span class="ui-inputgroup-addon"><i
+                        class="fa fa-lock input-icon-addons"></i></span>
+                <input id="password" type="password" autocomplete="off" (keyup.enter)="onSubmit()"
+                       [(ngModel)]="this.password" [disabled]="isInLoginProcess"
+                       placeholder="{{'LOGIN.PASSWORD' | translate}}">
+            </div>
+
+            <div class="ui-inputgroup pt36">
+                <button type="button"
+                        [disabled]="(this.user.length === 0) || (this.password.length === 0) || this.isInLoginProcess"
+                        class="login-button ui-button ui-widget ui-state-default ui-corner-all"
+                        (click)="onSubmit()">
+                    <span class="ui-button-text ui-c" translate>LOGIN.BUTTON</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="secondary-container">
+        <span>Stay tune:</span>
+        <a class="btn-social btn-facebook" href="#" tabindex="-1">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a class="btn-social btn-twitter" href="#" tabindex="-1">
+            <i class="fab fa-twitter"></i>
+        </a>
+    </div>
+</div>

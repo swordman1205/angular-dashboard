@@ -1,0 +1,35 @@
+<div class="fl-header">
+  <H3 translate class="fl-widget-header">WIDGETS.DOCUMENTS.TITLE</H3>
+
+  <button translate class="fl-refresh-btn"><!--(click)="getData()"-->
+    <i class="far fa-sync-alt"></i>
+  </button>
+</div>
+
+<p-table #documentsTbl
+         [value]="data"
+         [scrollable]="true"
+         scrollHeight="100%"
+         [loading]="loading"
+         [responsive]="true">
+  <!--[globalFilterFields]="['LocationName','AssetName','AssetMeasureName', 'StatusViewParsed', 'StatusTimestampParsed']"-->
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>{{'WIDGETS.DOCUMENTS.COLUMNS.NAME' | translate}}</th>
+      <th>{{'WIDGETS.DOCUMENTS.COLUMNS.SIZE' | translate}}</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-data>
+    <tr>
+      <td class="user-col" title="{{data.LocationName}}">
+        <a [routerLink]="[ '/location/' + data.LocationID + '/locationDashboard/widgets']">{{data.LocationName}}</a>
+      </td>
+      <td title="{{data.AssetName}}">
+        <a [routerLink]="[ '/asset/' + data.AssetID + '/assetDashboard/widgets']">{{data.AssetName}}</a>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>

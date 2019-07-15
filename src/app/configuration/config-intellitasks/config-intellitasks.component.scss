@@ -1,0 +1,11 @@
+.intelliTask-container {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  height: 100%
+}
+
+.config-intelliTask-panels {
+  width: 100%;
+  height: 100%;
+  margin-left: 20px;
+}

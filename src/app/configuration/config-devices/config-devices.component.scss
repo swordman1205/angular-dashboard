@@ -1,0 +1,65 @@
+.devices-container {
+  display: flex;
+  height: calc(100% - 60px);
+}
+
+.tree-filter-container {
+  height: 100%;
+  width: 314px;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+}
+
+.tree-container {
+  overflow: auto;
+  height: calc(100% - 60px);
+}
+
+p-tabView {
+  height: 100%;
+    /*background-color: #002547;
+	background-color: rgba(0,37,71,0.65);*/
+    /*background-color: #FFFFFF;*/
+  margin-left: 10px;
+  border-radius: 6px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.buttons-container {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
+
+  & button {
+    margin-right: 10px;
+  }
+}
+
+.ui-inputgroup {
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  margin-left: 9px;
+  margin-top: 12px;
+}
+
+.search-text {
+  text-indent: 1.7em;
+  background: #FFFFFF;
+  line-height: 2em;
+  width: 100%;
+  margin: 7px;
+}
+
+.search-container {
+  display: flex;
+	border-bottom: 1px solid #D8D8D8;
+}

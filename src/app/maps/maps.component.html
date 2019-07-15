@@ -1,0 +1,58 @@
+<p-blockUI [target]="confgItems" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<!-- <p-dialog *ngIf='newGenReport' header='Generated Report' [(visible)]="flgDisplayGenRptDlg" [modal]="true" [responsive]="true"
+    (onHide)='genRptDilgClosed()' [width]="335" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+
+</p-dialog> -->
+
+<app-blocker #confgItems>
+	
+    <div class="p-grid">
+        <div class="p-col-8">
+
+    <dx-map provider="bing" [zoom]="14" height="600" width="100%" [controls]="true" [markers]="markers" [routes]="routes" class="dxmap">
+    </dx-map>
+
+        </div>
+        <div class="p-col-3">
+			
+    <div class="details">
+        <div class="caption">Options</div>
+        <div class="option">
+            <span>Set mode</span>
+            <dx-select-box [dataSource]="[ 'driving', 'walking' ]" value="driving" (onValueChanged)="setMode($event)">
+            </dx-select-box>
+        </div>
+        <div class="option">
+            <span>Route color</span>
+            <dx-select-box [dataSource]="[ 'blue', 'green', 'red' ]" value="blue" (onValueChanged)="selectColor($event)">
+            </dx-select-box>
+        </div>
+    </div>
+			
+        </div>
+    </div>	
+	
+</app-blocker>

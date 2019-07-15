@@ -1,0 +1,145 @@
+<p-blockUI [target]="confgAlerts" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes"
+                    class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No"
+                    class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<app-blocker #confgAlerts>
+    <div class='config-alert'>
+
+        <div class="details">
+            <p-table #userAlertsTbl [columns]="userCols" [value]="userAlerts" [responsive]="true" selectionMode="single"
+                dataKey="ID" [(selection)]="currUserAlrt" [globalFilterFields]="['UserName', 'Asset', 'AssetMeasure']"
+                (onRowSelect)='userAlertSelected($event)' (onRowUnselect)='userAlertUnSelected($event)'
+                [paginator]="true" [rows]="7">
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER-->
+                    <div translate>Users</div>
+                    <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter"
+                            (input)="userAlertsTbl.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.headerClass">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <td>
+                            <!-- Icon Col -->
+                        </td>
+                        <td (click)='setUsrEdit($event, rowData)'>
+                            <label *ngIf="rowData['UsrEdit'] === false">{{rowData['UserName']}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['UsrEdit']" [options]="optUsers" [(ngModel)]="selUser"
+                                (onChange)='userComboChanged($event, rowData)' [filter]="true" filterBy="label">
+                            </p-dropdown>
+                        </td>
+                        <td (click)='setUAAstEdit($event, rowData)'>
+                            <label *ngIf="rowData['AstEdit'] === false">{{getUserAlrtAsset(rowData)}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['AstEdit']" [options]="optAssets"
+                                [(ngModel)]="selUAAsset" (onChange)='uaAstComboChanged($event, rowData)'></p-dropdown>
+                        </td>
+                        <td (click)='setUAAsmEdit($event, rowData)'>
+                            <label *ngIf="rowData['AsmEdit'] === false">{{getUserAlrtAsm(rowData)}}</label>
+                            <p-dropdown id="asm" *ngIf="rowData['AsmEdit']" [options]="optAsms" [(ngModel)]="selUAAsm"
+                                (onChange)='uaAsmComboChanged($event, rowData)'></p-dropdown>
+                        </td>
+                        <td (click)='setUAAlrtTypeEdit($event, rowData)'>
+                            <label *ngIf="rowData['AlrtTypeEdit'] === false">{{getUserAlrtType(rowData)}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['AlrtTypeEdit']" [options]="optAlrtTypes"
+                                [(ngModel)]="selUAAlrtType" (onChange)='uaAlrtTypeComboChanged($event, rowData)'>
+                            </p-dropdown>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="details">
+            <p-table #contctAlertsTbl [columns]="contactCols" [value]="contctAlerts" [responsive]="true"
+                selectionMode="single" dataKey="ID" [(selection)]="currContctAlrt"
+                (onRowSelect)='contactAlertSelected($event)' (onRowUnselect)='contactAlertUnSelected($event)'
+                [globalFilterFields]="['ContactName', 'Asset', 'AssetMeasure']" [paginator]="true" [rows]="7">
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER-->
+                    <div translate>Contacts</div>
+                    <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter"
+                            (input)="contctAlertsTbl.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [class]="col.headerClass" [pSortableColumn]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <td>
+                            <!-- Icon Col -->
+                        </td>
+                        <td (click)='setContctEdit($event, rowData)'>
+                            <label *ngIf="rowData['ContctEdit'] === false">{{rowData['ContactName']}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['ContctEdit']" [options]="optContcts"
+                                [(ngModel)]="selContact" (onChange)='contctComboChanged($event, rowData)'></p-dropdown>
+                        </td>
+                        <td (click)='setCAAstEdit($event, rowData)'>
+                            <label *ngIf="rowData['AstEdit'] === false">{{getContctAlrtAsset(rowData)}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['AstEdit']" [options]="optAssets"
+                                [(ngModel)]="selCAAsset" (onChange)='caAstComboChanged($event, rowData)'></p-dropdown>
+                        </td>
+                        <td (click)='setCAAsmEdit($event, rowData)'>
+                            <label *ngIf="rowData['AsmEdit'] === false">{{getContctAlrtAsm(rowData)}}</label>
+                            <p-dropdown id="asm" *ngIf="rowData['AsmEdit']" [options]="optAsms" [(ngModel)]="selCAAsm"
+                                (onChange)='caAsmComboChanged($event, rowData)'></p-dropdown>
+                        </td>
+                        <td (click)='setCAAlrtTypeEdit($event, rowData)'>
+                            <label *ngIf="rowData['AlrtTypeEdit'] === false">{{getContctAlrtType(rowData)}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['AlrtTypeEdit']" [options]="optAlrtTypes"
+                                [(ngModel)]="selCAAlrtType" (onChange)='caAlrtTypeComboChanged($event, rowData)'>
+                            </p-dropdown>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="buttons-container">
+            <button pButton type="button" label="Add User Alert" (click)='addUserAlert()'></button>
+            <button pButton type="button" label="Add Contact Alert" (click)='addContct()'></button>
+            <button pButton type="button" label="Remove User Alert" (click)='removeUserAlert()'></button>
+            <button pButton type="button" label="Remove Contact Alert" (click)='removeContctAlert()'></button>
+        </div>
+
+    </div>
+</app-blocker>

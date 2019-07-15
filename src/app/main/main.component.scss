@@ -1,0 +1,48 @@
+@import '../../assets/sass/mixins';
+@import '../../assets/sass/variables';
+
+.body_bg .top_gradient {
+  background-color: #051943;
+  opacity: 0.4;
+}
+
+.layout-wrapper {
+  position: absolute;
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+
+.layout-container {
+  width: 100%;
+  height: calc(100vh - 50px);
+
+  &:not(.layout-menu-static-inactive) {
+    /deep/ {
+      .topbar .topbar-left #menu-button {
+        @include rotate(90deg);
+      }
+    }
+  }
+
+  .layout-menu {
+    top: 70px;
+    background-color: rgba($navBgColor, 0.8);
+    height: unset;
+    bottom: 51px;
+  }
+}
+
+.layout-main {
+  height: calc(100% - 70px);
+  padding-top: 70px;
+}
+
+.bc-container {
+  display: flex;
+  width: 100%;
+  height: 50px;
+}
+
+.item {
+  flex-basis: 50%;
+}

@@ -1,0 +1,51 @@
+.items-container {
+  display: flex;
+  height: calc(100% - 60px);
+}
+
+.list-container {
+  overflow: auto;
+  height: 100%;
+  width: 245px;
+  background: #FFFFFF;
+  border-radius: 6px;
+}
+
+p-listbox {
+  display: flex;
+  // height:calc(100% - 24px);
+  width: calc(100% - 24px);
+  margin: 7px;
+  padding: 7px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+p-tabView {
+  height: 100%;
+    /*background-color: #002547;
+	background-color: rgba(0,37,71,0.65);*/
+    /*background-color: #FFFFFF;*/
+  margin-left: 10px;
+  border-radius: 6px;
+}
+
+.buttons-container {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
+
+  & button {
+    margin-right: 10px;
+  }
+}
+
+.ui-inputgroup {
+  width: 100%;
+}

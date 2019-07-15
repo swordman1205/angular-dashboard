@@ -1,0 +1,69 @@
+/* Add your customizations of theme here */
+@import 'variables';
+
+body {
+  .ui-table {
+    .ui-table-tfoot > tr > td {
+      padding: 0 10px;
+    }
+
+    .ui-table-thead > tr > th,
+    .ui-table-tfoot > tr > td {
+      background-color: $widgetTableHeaderBgColor;
+      color: $widgetTableHeaderTextColor;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-family: "Open Sans";
+      height: 30px;
+    }
+
+    .ui-table-scrollable-header {
+      border-radius: 3px;
+      margin: 0px -5px;
+      padding: 0 5px;
+      background-color: $widgetTableHeaderBgColor;    
+    }
+
+    .ui-table-tbody > tr > td {
+      border-bottom: 1px solid $widgetTableHeaderBgColor;
+      line-height: 38px;
+    }
+
+    .ui-table-tbody > tr > td {
+      color: #2f3544;
+      font-size: 11px;
+    }
+  
+    .ui-table-tbody > tr > td > .far.fa-clock {
+      font-size: 13px;
+      color: $widgetTableBodyIconColor;
+      position: relative;
+      top: 1px;
+      margin-right: 5px;
+    }
+
+    .ui-table-tbody > tr > td > a:-webkit-any-link {
+      color: $widgetTableHeaderTextColor;
+      font-weight: 400;
+      text-decoration: none;
+      &:hover {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.body_bg {
+  background-image: url(/assets/images/background.svg);
+  background-size: cover;
+  background-position: 0 50%;
+  filter: unset;
+}
+
+.top_gradient {
+  height: 100vh;
+  filter: unset;
+	background-color: $topGradientColor;
+  opacity: .8;
+}

@@ -1,0 +1,23 @@
+<div class="fl-header">
+  <H3 translate class="fl-widget-header">WIDGETS.LOCATION_INFORMATION.TITLE</H3>
+
+  <button (click)="getData()" translate class="fl-refresh-btn">
+    <i class="far fa-sync-alt"></i>
+  </button>
+</div>
+
+<p-blockUI [target]="locationInfoPanels" [blocked]="loading">
+  <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute;top:48%;left:50%"></i>
+</p-blockUI>
+
+<app-blocker #locationInfoPanels>
+
+  <p-accordion>
+    <p-accordionTab *ngFor="let section of locationData; let i = index" [header]="(section.header | translate)">
+      <div class="row-container" *ngFor="let column of section.columns">
+        <div class="key item">{{ column.title | translate }}</div>
+        <div class="item">{{ data ? data[column.key] : '' }}</div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</app-blocker>

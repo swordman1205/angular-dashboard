@@ -1,0 +1,192 @@
+<p-blockUI [target]="confgItems" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<p-dialog *ngIf='newGenReport' header='Generated Report' [(visible)]="flgDisplayGenRptDlg" [modal]="true" [responsive]="true"
+    (onHide)='genRptDilgClosed()' [width]="335" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div class="p-grid">
+        <div class="p-col-3">
+            <label>Report</label>
+        </div>
+        <div class="p-col">
+            <label>{{getColData(newGenReport, 'ReportID')}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3">
+            <label>ID</label>
+        </div>
+        <div class="p-col">
+            <label>{{newGenReport.ID}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3" *ngIf='flgShowDates'>
+            <label>From</label>
+        </div>
+        <div class="p-col" *ngIf='flgShowDates'>
+            <label for="toDate">{{getColData(newGenReport, 'StartDate')}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3" *ngIf='flgShowDates'>
+            <label>To</label>
+        </div>
+        <div class="p-col" *ngIf='flgShowDates'>
+            <label for="toDate">{{getColData(newGenReport, 'EndDate')}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3" *ngIf='flgShowIncldWarn'>
+            <label>Warnings</label>
+        </div>
+        <div class="p-col" *ngIf='flgShowIncldWarn'>
+            <label for="toDate">{{newGenReport.IncludeWarnings}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3" *ngIf='flgShowOnlyAlarms'>
+            <label>Only Alarms</label>
+        </div>
+        <div class="p-col" *ngIf='flgShowOnlyAlarms'>
+            <label for="toDate">{{newGenReport.OnlyAlarms}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3">
+            <label>Format</label>
+        </div>
+        <div class="p-col">
+            <label for="toDate">{{newGenReport.Format}}</label>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-3">
+            <label>Status</label>
+        </div>
+        <div class="p-col-3">
+            <label>{{getColData(newGenReport, 'Status')}}</label>
+        </div>
+        <div class="p-col-6">
+            <p-progressBar mode="indeterminate" [style]="{'height': '7px', 'margin-top': '8px', 'marging-left': '5px'}"></p-progressBar>
+        </div>
+    </div>
+</p-dialog>
+
+<app-blocker #confgItems>
+    <div class="reports-container">
+        <div class="list-container">
+            <p-listbox [options]="reportItems" [(ngModel)]="CurrReport" filter="true">
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <!-- <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 5px" width="16"> -->
+                        <i class="fas fa-file-invoice"></i>
+                        <span style="text-align:left;padding:5px 5px 0 5px;">{{item.value.Name}}</span>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+
+        <div class="details">
+            <div class='p-grid container'>
+                <div class="p-grid">
+                    <div class="p-col">
+                        <label for="reportType">Report</label>
+                    </div>
+                    <div class="p-col">
+                        <p-dropdown [options]="reportOptions" [(ngModel)]="selRptID" placeholder="Select a Report"
+                            (onChange)='rptTypeChanaged($event)'></p-dropdown>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowDates'>
+                        <label for="fromDate">From</label>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowDates'>
+                        <p-calendar [(ngModel)]="selStartDate" dateFormat="mm/dd/yy" showTime="true" hourFormat="12"
+                            [showIcon]="true"></p-calendar>
+                        <!-- (onSelect)='dirtifyItem()' -->
+                    </div>
+                    <div class="p-col" *ngIf='flgShowDates'>
+                        <label for="toDate">To</label>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowDates'>
+                        <p-calendar [(ngModel)]="selEndDate" dateFormat="mm/dd/yy" showTime="true" hourFormat="12"
+                            [showIcon]="true"></p-calendar>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowIncldWarn'>
+                        <label for="warnings">Warnings</label>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowIncldWarn'>
+                        <p-checkbox [(ngModel)]="incldWarnings" binary="true"></p-checkbox>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowOnlyAlarms'>
+                        <label for="onlyAlrms">Only Alarms</label>
+                    </div>
+                    <div class="p-col" *ngIf='flgShowOnlyAlarms'>
+                        <p-checkbox [(ngModel)]="onlyAlarms" binary="true"></p-checkbox>
+                    </div>
+                    <div class="p-col">
+                        <label for="format">Format</label>
+                    </div>
+                    <div class="p-col">
+                        <p-dropdown [options]="formatOptions" [(ngModel)]="selFormat" placeholder="Select a Format"></p-dropdown>
+                    </div>
+                    <button pButton type="button" label="Generate" (click)='generateRpt()' style='margin-left: 15px'></button>
+                </div>
+            </div>
+            <p-table #genReportsTbl [columns]="reportCols" [value]="filtrReports" [responsive]="true" selectionMode="single"
+                dataKey="ID" [(selection)]="currGenReport" [globalFilterFields]="['CreateDate']" [paginator]="true"
+                [rows]="10" dataKey='ID'>
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER-->
+                    <div translate>Generated Reports</div>
+                    <div style="text-align: right">
+                        <i class="fas fa-search" style="margin:4px 5px 5px 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter" (input)="genReportsTbl.filterGlobal($event.target.value, 'contains')">
+                        <button pButton type="button" icon="fas fa-sync-alt" style="margin:4px 10px 5px 20px; padding: 3px 3px 3px 3px"
+                            (click)='getData()'></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [class]="col.headerClass">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th style='width: 125px'></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <td *ngFor="let col of columns" [class]="col.columnClass" [title]="rowData[col.field]">
+                            <div *ngIf="col.field !== 'Status'">{{getColData(rowData, col.field)}}</div>
+                            <div *ngIf="col.field === 'Status'" [ngStyle]='rowData.Style'>{{getColData(rowData,
+                                col.field)}}</div>
+                        </td>
+                        <td style="padding:5px 5px 5px 5px"><button pButton type="button" label="Download" class="ui-button-rounded"
+                                icon="pi pi-check" [disabled]="rowData['Status'] !== rptStatuses.READY" (click)='downloadReport($event, rowData)'></button></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</app-blocker>

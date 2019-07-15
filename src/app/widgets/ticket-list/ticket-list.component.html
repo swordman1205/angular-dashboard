@@ -1,0 +1,120 @@
+<div class="fl-header">
+    <H3 translate class="fl-widget-header">WIDGETS.TICKET_LIST.TITLE</H3>
+
+    <div id="filter-container">
+        <label translate class="all-ticket-lbl">WIDGETS.TICKET_LIST.ALL_TICKETS</label>
+        <p-inputSwitch [(ngModel)]="openTickets"
+                       class="open-tickets-btn"
+                       (onChange)="onOpenTicketChange($event)">
+        </p-inputSwitch>
+        <label translate class="open-ticket-lbl">WIDGETS.TICKET_LIST.OPEN_TICKETS</label>
+
+        <!-- CUSTOM -->
+        <div id="filter-params" *ngIf="!openTickets">
+            <label translate class="label-from">COMMON.FROM</label>
+            <p-calendar [(ngModel)]="from" showTime="showTime"
+                        hourFormat="12"></p-calendar>
+            <label translate class="label-to">COMMON.TO</label>
+            <p-calendar [(ngModel)]="to" showTime="showTime"
+                        hourFormat="12"></p-calendar>
+            <div id="execute-container">
+                <button pButton (click)="onTimeChange()" translate id="execute">
+                    <i class="fa fa-play-circle-o"></i>
+                    Execute
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <button (click)="getData()" translate class="fl-refresh-btn">
+        <i class="far fa-sync-alt"></i>
+    </button>
+</div>
+
+<div id="table-container">
+    <p-table #ticketListGridTbl
+             [value]="data"
+             [scrollable]="true"
+             scrollHeight="100%"
+             [loading]="loading"
+             [responsive]="true"
+             [paginator]="true"
+             [rows]="15">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 92px">{{'WIDGETS.TICKET_LIST.COLUMNS.TICKET_NUMBER' | translate}}</th>
+                <th>{{'WIDGETS.TICKET_LIST.COLUMNS.LOCATION' | translate}}</th>
+                <th>{{'WIDGETS.TICKET_LIST.COLUMNS.ASSET_DEVICE' | translate}}</th>
+                <th class="time-col">{{'WIDGETS.TICKET_LIST.COLUMNS.ALERT_TIME' | translate}}</th>
+                <th>{{'WIDGETS.TICKET_LIST.COLUMNS.TICKET_REASON' | translate}}</th>
+                <th>{{'WIDGETS.TICKET_LIST.COLUMNS.TICKET_CAUSE' | translate}}</th>
+                <th>{{'WIDGETS.TICKET_LIST.COLUMNS.TICKET_ACTION' | translate}}</th>
+                <th class="time-col">{{'WIDGETS.TICKET_LIST.COLUMNS.CREATED_ON' | translate}}</th>
+                <th class="time-col">{{'WIDGETS.TICKET_LIST.COLUMNS.CLOSED_ON' | translate}}</th>
+                <th style="width: 56px">{{'WIDGETS.TICKET_LIST.COLUMNS.ACK' | translate}}</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td style="width: 92px" class="three-dots" title="{{data.ID}}">
+                    {{data.ID}}
+                </td>
+
+
+                <td class="three-dots" title="{{data.LocationName}}">
+                    <a [routerLink]="[ '/location/' + data.LocationID + '/locationDashboard/widgets']">
+                        {{data.LocationName}}
+                    </a>
+                </td>
+
+                <td class="three-dots" title="{{data.AssetName}}">
+                    <a *ngIf="data.AssetID === -978">
+                        <span>{{data.AssetName !== '' ? data.AssetName : data.ObjectName}}</span>
+                    </a>
+                    <a *ngIf="data.AssetID !== -978"
+                       [routerLink]="[ '/asset/' + data.AssetID + '/assetDashboard/widgets']">
+                        <span>{{data.AssetName !== '' ? data.AssetName : data.ObjectName}}</span>
+                    </a>
+                </td>
+
+                <td class="three-dots time-col" title="{{data.AlertTimeParsed}}">
+                    <i *ngIf="data.AlertTimeParsed !== ''" class="far fa-clock"
+                       aria-hidden="true"></i>
+                    {{data.AlertTimeParsed}}
+                </td>
+
+                <td class="three-dots" title="{{data.TicketReasonName}}">
+                    {{data.TicketReasonName}}
+                </td>
+
+                <td class="three-dots" title="{{data.TicketCauseName}}">
+                    {{data.TicketCauseName}}
+                </td>
+
+                <td class="three-dots" title="{{data.TicketActionName}}">
+                    {{data.TicketActionName}}
+                </td>
+
+                <td class="three-dots time-col" title="{{data.CreatedOnParsed}}">
+                    <i *ngIf="data.CreatedOnParsed !== ''" class="far fa-clock"
+                       aria-hidden="true"></i>
+                    {{data.CreatedOnParsed}}
+                </td>
+
+                <td class="three-dots time-col" title="{{data.ClosedOnParsed}}">
+                    <i *ngIf="data.ClosedOnParsed !== ''" class="far fa-clock"
+                       aria-hidden="true"></i>
+                    {{data.ClosedOnParsed}}
+                </td>
+
+                <td style="width: 56px" class="three-dots" title="{{data.AcknowledgedParsed}}">
+                    {{data.AcknowledgedParsed}}
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>

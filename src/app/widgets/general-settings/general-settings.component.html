@@ -1,0 +1,15 @@
+<p-tabView>
+    <p-tabPanel header="{{'SETTINGS.TAGS' | translate}}" leftIcon="fa-tag">
+        <h3 class="">{{'SETTINGS.TREE' | translate}}</h3>
+        <p-inputSwitch (onChange)="onNavigatorToggleChange($event)" [(ngModel)]="isNavigatorTree"></p-inputSwitch>
+        <app-tags></app-tags>
+    </p-tabPanel>
+    <!--<p-tabPanel header="About" leftIcon="fa-info-circle">
+        <span translate>ABOUT</span>
+    </p-tabPanel>-->
+</p-tabView>
+
+<button pButton type="button" label="{{'COMMON.CANCEL' | translate}}" class="ui-button-warning"
+        (click)="onCancel()"></button>
+<button pButton type="button" label="{{'COMMON.SAVE' | translate}}" class="ui-button-success"
+        (click)="onSave()"></button>

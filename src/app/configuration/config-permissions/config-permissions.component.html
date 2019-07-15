@@ -1,0 +1,60 @@
+<p-blockUI [target]="confgPemiss" [blocked]="loading">
+  <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
+<app-blocker #confgPemiss>
+  <p-table #tblPermiss [columns]="permissCols" [value]="locAllowedUsers" selectionMode="single" dataKey="ID" [globalFilterFields]="['UserName','FirstName','LastName']"
+    [(selection)]="CurrECSObject" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div></div> <!-- EMPTY DIV TO ALIGN HEADER-->
+      <!-- <div translate>Contacts</div> -->
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="30" placeholder="Filter" (input)="tblPermiss.filterGlobal($event.target.value, 'contains')">
+      </div>
+    </ng-template>
+    <!-- Columns -->
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns; let i = index" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- Body (rows of Data) -->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of dataCols">
+          {{rowData[col.field]}}
+        </td>
+        <td>
+          <p-checkbox binary="true" [(ngModel)]="rowData['Sync']" (onChange)='permissChanged($event, rowData)'></p-checkbox>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</app-blocker>

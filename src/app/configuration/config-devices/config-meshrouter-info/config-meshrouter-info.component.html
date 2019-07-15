@@ -1,0 +1,223 @@
+<div class='config-devices-info' *ngIf='router'>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+        <!-- First Row ( MeshRouter Details ) -->
+        <div class="ui-grid-row">
+
+            <div class="ui-grid-col-6 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+                <!-- MeshRouter ID -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="routerID">Mesh Router ID</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="routerID">{{router?.PhysicalID}}</label>
+                    </div>
+                </div>
+
+                <!-- Network Address -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="ntAddrs">Network Address</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="ntAddrs">{{router?.NetworkAddress}}</label>
+                    </div>
+                </div>
+
+                <!-- Parent Address -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="prntAddrss">Parent Address</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="prntAddrss">{{router?.ParentAddress}}</label>
+                    </div>
+                </div>
+
+                <!-- Device Type -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="dvcType">Device Type</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="dvcType">{{routerTypes[router?.DeviceType] | translate}}</label>
+                    </div>
+                </div>
+
+                <!-- Node ID -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="nodeID">Node ID</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="nodeID">{{router?.NodeID}}</label>
+                    </div>
+                </div>
+
+                <!-- Profile ID -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="prflID">Profile ID</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="prflID">{{router?.ProfileID.toString(16).toUpperCase()}}</label>
+                    </div>
+                </div>
+
+                <!-- Manufacture ID -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="mnufcID">Manufacture ID</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="mnufcID">{{router?.ManufactureID.toString(16).toUpperCase()}}</label>
+                    </div>
+                </div>
+
+                <!-- Firmware Ver -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="frmwVer">Firmware Ver</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="frmwVer">{{router?.FirmwareVer.toString(16).toUpperCase()}}</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Upper Right Cube -->
+            <div class="ui-grid-col-6 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+                <!-- RSSI -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="rssi">RSSI</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="rssi">{{getRSSI()}}</label>
+                    </div>
+                </div>
+
+                <!-- Remaininf Slots -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="rmnSlots">Remaining Slots</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="rmnSlots">{{router?.LastLog?.Slots}}</label>
+                    </div>
+                </div>
+
+                <!-- Last Update (Route) -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="lstRTUpdt">Last Update (Route)</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="lstRTUpdt">{{router?.LastRTUpdate | ecsDatetime}}</label>
+                    </div>
+                </div>
+
+                <!-- Data Valid -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="datValid">Data Valid</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="datValid">{{router?.NotValid ? 'False' : 'True'}}</label>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="status">Status</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="status">{{router?.Status}}</label>
+                    </div>
+                </div>
+
+                <!-- Last Update (I/O) -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="lstUpdt">Last Update (I/O)</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="lstUpdt">{{router?.LastUpdate | ecsDatetime}}</label>
+                    </div>
+                </div>
+
+                <!-- Connected -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="status">Connected</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <label id="status">{{router?.IsConnected ? 'True' : 'False'}}</label>
+                    </div>
+                </div>
+
+                <!-- Zone ID -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-5">
+                        <label for="zoneID">Zone ID</label>
+                    </div>
+                    <div class="ui-grid-col-7">
+                        <input id="zoneID" type="text" pInputText [(ngModel)]='router.ZoneID' (change)='onDirtify()'>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Second Row (Assocoated Devices Greed) -->
+        <div class="ui-grid-row">
+
+            <p-table #ascDevicesTbl [columns]="ascDeviceCols" [value]="ascDevices" [scrollable]="true" scrollHeight="16em" [loading]="loading"
+                [responsive]="true" selectionMode="single" dataKey="user" [style]="{'margin-bottom':'10px'}" [(selection)]="selectedAsc"
+                [globalFilterFields]="['DeviceID, DeviceType']" dataKey="ID">
+                <ng-template pTemplate="caption">
+                    <div></div> <!-- EMPTY DIV TO ALIGN HEADER -->
+                    <!-- <div translate>WIDGETS.ACTIVITY.TITLE</div> -->
+                    <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="30" placeholder="Filter" (input)="ascDevicesTbl.filterGlobal($event.target.value, 'contains')">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns; let i=index" [pSortableColumn]="col.field" [class]="col.headerClass">
+                            {{col.header}}
+                            <p-sortIcon *ngIf="i > 0" [field]="col.field"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <!-- <td *ngFor="let col of columns" [class]="col.columnClass" [title]="rowData[col.field]">
+                            {{rowData[col.field]}}
+                        </td> -->
+                        <td [title]="rowData['PhysicalID']">
+                            {{rowData['PhysicalID']}}
+                        </td>
+                        <td [title]="rowData['DeviceTypeID']">
+                            {{geteviceTypeName(rowData) }}
+                        </td>
+                        <td [title]="rowData['RSSI']">
+                            {{rowData['RSSI']}}
+                        </td>
+                        <td [title]="rowData['LastUpdate']">
+                            {{rowData['LastUpdate'] | ecsDatetime}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>

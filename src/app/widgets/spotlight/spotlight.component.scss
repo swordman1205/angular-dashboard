@@ -1,0 +1,51 @@
+@import '../../../assets/sass/variables';
+
+.ui-g {
+  position: relative;
+  i {
+    color: $navSearchBorderColor;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 9px;
+  }
+
+  .p-autocomplete {
+    font-size: 24px;
+    color: $white;
+    /deep/ {
+      .ui-inputtext {
+        width: 310px;
+        height: 34px;
+        border-radius: 20px;
+        border: 2px solid $navSearchBorderColor;
+        background-image: none;
+        font-size: 13px;
+        padding-left: 15px;
+        &::-webkit-input-placeholder {
+          color: $navSearchBorderColor;
+        }
+        &::-moz-placeholder {
+          color: $navSearchBorderColor;
+        }
+        &:-ms-input-placeholder {
+          color: $navSearchBorderColor;
+        }
+        &:-moz-placeholder {
+          color: $navSearchBorderColor;
+        }
+      }
+      .ui-autocomplete-panel {
+        background-color: $white;
+        .ui-autocomplete-list-item {
+          .ui-helper-clearfix {
+            border-bottom: 0 !important;
+            i.material-icons {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

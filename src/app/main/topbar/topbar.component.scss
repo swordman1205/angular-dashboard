@@ -1,0 +1,96 @@
+@import '../../../assets/sass/variables';
+
+.topbar {
+  height: 70px;
+  padding: 0 34px 0 27px;
+  background-color: $navBgColor;
+  box-sizing: border-box;
+  .fl-logo {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+    #menu-button {
+      color: $white;
+      font-size: 20px;
+      margin-right: 15px;
+    }
+  }
+  .topbar-right {
+    padding: 0;
+    height: 100%;
+    .topbar-items {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      padding: 0;
+      height: 100%;
+      .link-item {
+        margin-left: 20px !important;
+        a {
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          border: 1px solid $navItemColor;
+          font-size: 16px;
+          color: $navItemColor;
+          text-align: center;
+          line-height: 30px;
+          &.font-18 {
+            font-size: 18px;
+          }
+        }
+        &:nth-last-child(2) {
+          margin-left: 53px !important;
+        }
+        &:hover a {
+          border: 2px solid $white;
+          color: $white;
+          width: 28px;
+          height: 28px;
+          line-height: 28px;
+        }
+      }
+
+      .notification-item {
+        margin-left: 14px !important;
+        margin-right: 18px;
+        a {
+          position: relative;
+          i {
+            font-size: 20px;
+            color: $navNotificationItemColor;
+          }
+          .unread-count {
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            background-color: $navNotificationItemCountBgColor;
+            color: $white;
+            width: 16px;
+            height: 16px;
+            font-size: 11px;
+            border-radius: 16px;
+            line-height: 16px;
+            text-align: center;
+            border: 2px solid $navBgColor;
+          }
+        }
+      }
+
+      .profile-item {
+        margin-left: 0 !important;
+        width: 30px;
+        height: 30px;
+        border: 1px solid;
+        border-radius: 50%;
+        .profile-image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

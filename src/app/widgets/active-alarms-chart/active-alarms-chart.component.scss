@@ -1,0 +1,21 @@
+.chart-container {
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+:host {
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+
+  /deep/ p-chart > div {
+    height: 100%;
+  }
+
+  /deep/ p-button button {
+    background-color: #E9E9E9;
+    color: #1c4153;
+    box-shadow: unset;
+    font-size: 25px;
+  }
+}

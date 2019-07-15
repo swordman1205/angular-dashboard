@@ -1,0 +1,14 @@
+:host /deep/ {
+
+  .ui-panel {
+    height: 100%;
+  }
+
+  .ui-panel-content-wrapper {
+    height: calc(100% - 3.7em);
+  }
+
+  p-chart > div {
+    height: 100%;
+  }
+}

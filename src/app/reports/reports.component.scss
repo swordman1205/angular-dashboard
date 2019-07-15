@@ -1,0 +1,67 @@
+.reports-container {
+  display: flex;
+  height: calc(100% - 60px);
+}
+
+.container {
+  // display: flex; /* or inline-flex */
+  // height: 100%;
+  // background: wheat;
+  // align-items: flex-start ; //flex-start | flex-end | center | baseline | stretch;
+  // margin: 15px, 15px, 150x, 15px;
+  // padding: 15px, 15px, 150x, 15px;
+  justify-content: space-between; //flex-start | flex-end | center | space-between | space-around | space-evenly;
+  padding: 10px; // The distance of the content from the container edges
+  margin: 10px; // The distance of the border from the parent container
+  // list-style: none;
+  // border: 1px solid silver;
+  // background: yellow;
+  -ms-box-orient: horizontal;
+  // display: -webkit-box;
+  // display: -moz-box;
+  // display: -ms-flexbox;
+  // display: -moz-flex;
+  // display: -webkit-flex;
+  display: flex;
+}
+
+.list-container {
+  overflow: auto;
+  height: 100%;
+  width: 285px;
+  background: #FFFFFF;
+  border-radius: 6px;
+}
+
+p-listbox {
+  display: flex;
+  width: calc(100% - 24px);
+  margin: 7px;
+  padding: 7px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.progressbar-popup-item {
+  background: #d47e7e;
+  margin: 15px 15px 15px 15px;
+  padding: 25px 15px 25px 15px;
+  justify-content: center;
+  align-items: center;  //align the flex items vertically
+}
+
+// .flex-container {
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: nowrap;
+//   flex-flow
+//   justify-content: center;
+//   align-items: center;  //align the flex items vertically
+//   align-content
+// }

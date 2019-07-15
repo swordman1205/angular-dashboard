@@ -1,0 +1,135 @@
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.layout {
+  // margin: 10px;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  // overflow-y: hidden;
+  // overflow-x: hidden;
+  background-color: #002547;
+  background-color: rgba(0, 37, 71, 0.65);
+  padding: 10px;
+  transform: initial;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  height: 95%;
+  justify-content: left;
+}
+
+.dx-drawer-expand.dx-drawer-right {
+  width: 400px;
+}
+
+.buttons-container {
+  margin-right: 15px;
+  padding-top: 5px;
+  position: absolute;
+  right: 0;
+}
+
+#refreshButton {
+  margin-right: 5px;
+}
+
+.dx-tab {
+  padding: 0;
+  padding-bottom: 9px;
+  padding-left: 9px;
+  -webkit-border-top-left-radius: 6px !important;
+  -webkit-border-top-right-radius: 6px !important;
+  -moz-border-radius-topleft: 6px !important;
+  -moz-border-radius-topright: 6px !important;
+  border-top-left-radius: 6px !important;
+  border-top-right-radius: 6px !important;
+}
+
+.dx-tab-content {
+  width: 100%;
+}
+
+:host {
+  display: block;
+  border: 1px solid black;
+}
+
+// .tab {
+//   position: relative;
+//   top: 6px;
+// }
+
+// .fl-configuration-tabs {
+//   position: relative;
+// }
+
+dx-drawer {
+  width: 400px;
+}
+
+dx-tabs {
+  position: absolute;
+  right: 0px;
+  top: 75px;
+}
+
+// #scrolled-tabs {
+//   margin-right: 20px;
+// }
+
+::ng-deep .dx-toolbar {
+  background-color: rgba(191, 191, 191, .15);
+  padding: 5px 10px;
+}
+
+::ng-deep .dx-list-item-icon-container, ::ng-deep .dx-toolbar-before {
+  width: 36px;
+  padding-right: 0px !important;
+  text-align: center;
+}
+
+::ng-deep .dx-list-item-content {
+  padding-left: 10px !important;
+}
+
+::ng-deep .dx-button {
+  background-color: rgba(191, 191, 191, -0.15);
+  border: none;
+}
+
+::ng-deep .panel-list {
+  height: auto;
+  width: 250px;
+  // transform: none;
+}
+
+dx-drawer-content {
+  transform: none !important;
+}
+
+// ::ng-deep .dx-drawer-expand.dx-drawer-right .panel-list {
+//   float: right;
+// }
+
+::ng-deep .panel-list .dx-list-item {
+  color: #fff;
+  border-top: 1px solid rgba(221, 221, 221, .2);
+}
+
+::ng-deep .panel-list .dx-list-item .dx-icon {
+  color: #fff !important;
+}
+
+::ng-deep #content {
+  height: 100%;
+  // padding: 10px 20px;
+}
+
+// ::ng-deep #content h2 {
+//   font-size: 26px;
+// }

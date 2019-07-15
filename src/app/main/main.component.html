@@ -1,0 +1,47 @@
+<p-dialog [header]="this.getConfigPopupTitle()" [(visible)]="displayConfig" [modal]="true" [responsive]="true" 
+        [width]="1350" [height]="1050" [positionTop]="110" 
+        [maximizable]="false" [baseZIndex]="9999999999999999"  (onHide)='afterConfigPopupClosed()'> 
+        
+        <router-outlet name='config'></router-outlet> 
+    
+    <!-- <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>  -->
+</p-dialog>
+
+
+<div class="layout-wrapper" [ngClass]="{'layout-compact':layoutCompact}" (click)="onLayoutClick()">
+
+    <div #layoutContainer class="layout-container" [ngClass]="{'menu-layout-static': !isOverlay(),
+        'menu-layout-overlay': isOverlay(),
+        'layout-menu-overlay-active': overlayMenuActive,
+        'menu-layout-horizontal': isHorizontal(),
+        'menu-layout-slim': isSlim(),
+        'layout-menu-static-inactive': staticMenuDesktopInactive,
+        'layout-menu-static-active': staticMenuMobileActive}">
+
+        <app-topbar [itemType]="itemType" [itemId]="itemId"></app-topbar>
+
+        <div class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
+            <p-scrollPanel #scrollPanel [style]="{height: '100%'}">
+                <app-navigator [mode]='mode' [itemType]="itemType" [itemId]="itemId">
+                </app-navigator>
+            </p-scrollPanel>
+        </div>
+
+        <div class="layout-main">
+            <div class="bc-container">
+                <app-breadcrumbs class="item" [mode]='mode' [itemType]="itemType" [itemId]="itemId" (breadcrumsItemClick)='breadItemClick($event)'></app-breadcrumbs>
+                <!-- Empty div for the dx-tabs -->
+                <div class="item" id="tabscontainer"></div>
+            </div>
+            <p-growl [(value)]="msgs" life="10000"></p-growl> <!-- sticky="true" -->
+
+            <router-outlet name='live-view'></router-outlet>
+
+        </div>
+
+        <div class="layout-mask"></div>
+    </div>
+</div>

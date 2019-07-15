@@ -1,0 +1,463 @@
+@import 'assets/sass/variables';
+@import 'assets/sass/mixins';
+
+/* You can add global styles to this file, and also import other style files */
+body,
+body .ui-widget,
+body .ui-widget .ui-widget {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* GRIDS ELLIPSIS */
+
+.three-dots {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #222425;
+}
+
+.ui-panel-titlebar {
+  text-align: center;
+}
+
+// TODO: move to temperature-gauge.component.scss
+/* HIGHCHARTS */
+.outer-pane {
+  fill: #EFEFEF;
+}
+
+.middle-pane {
+  stroke-width: 1px;
+  stroke: #AAA;
+}
+
+.inner-pane {
+  fill: #DDDDDD;
+}
+
+.green-band {
+  fill: #55BF3B;
+  fill-opacity: 1;
+}
+
+.yellow-band {
+  fill: #DDDF0D;
+  fill-opacity: 1;
+}
+
+.red-band {
+  fill: #DF5353;
+  fill-opacity: 1;
+}
+
+.highcharts-gauge-series .highcharts-pivot {
+  stroke-width: 1px;
+  stroke: black;
+  fill-opacity: 0.3;
+}
+
+.highcharts-gauge-series .highcharts-dial {
+  fill: gray;
+}
+
+.highcharts-yaxis .highcharts-tick {
+  stroke-width: 2px;
+  stroke: #666666;
+}
+
+.highcharts-yaxis-grid .highcharts-grid-line,
+.highcharts-yaxis-grid .highcharts-minor-grid-line {
+  display: none;
+}
+
+.highcharts-yaxis .highcharts-minor-tick {
+  stroke-width: 1px;
+  stroke: #999999;
+}
+
+.time-col {
+  width: 190px !important;
+}
+
+.fl-refresh-btn {
+  font-size: 18px;
+  background-color: unset;
+  border: unset;
+  color: $inactiveWidgetRefreshBtnColor;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 0;
+
+  &:hover {
+    color: $activeWidgetRefreshBtnColor;
+  }
+
+  &:focus {
+    outline: unset;
+  }
+}
+
+.fl-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $widgetHeaderBottomColor;
+  margin: 0 0 20px 0;
+  padding: 20px 5px 10px 10px;
+}
+
+.fl-widget-header {
+  font-weight: normal;
+  font-size: 24px;
+  color: $widgetTitleColor;
+  margin: 0;
+}
+
+.widget {
+  height: 100%;
+  border-radius: 3px;
+  overflow-y: hidden;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* font awesome 5 */
+.fa.fab, .fa.fal, .fa.far, .fa.fas {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+.fa.fas {
+  font-family: Font Awesome\ 5 Free;
+  font-weight: 900;
+}
+.fa.far {
+  font-family: Font Awesome\ 5 Free;
+  font-weight: 400;
+}
+
+
+/*************** OVERWRITES ***************/
+
+/*
+Dark Blue - #002547 / 0,37,71
+Blue - #1A518A / 26,81,138
+Light Blue - #0499E6 / 4,153,230
+
+Green - #3FBA2A / 63,186,42
+Green Darker - #289B10 / 40,155,16
+
+Text - #222425 / 34,36,37
+Drk Gray - #2E3235 / 46,50,53
+Lt Gray - #D8D8D8 / 216,216,216
+*/
+
+
+.loading-container {
+	color: #FFFFFF !important;
+	/*background: #002547;
+	background: rgba(0, 37, 71, 0.85);*/
+	position: fixed;
+	top: 50%;
+	left: 50%;	
+
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);		
+}
+
+
+.login-button:hover, .login-button:focus {
+    background: #289B10 !important;
+}
+
+/***** INPUT *****/
+
+.ui-inputgroup .ui-inputtext {
+	padding-left: 0;
+}
+body .ui-inputgroup .ui-inputgroup-addon {
+	border-width: 0 0 0 0 !important;
+}
+
+/***** / INPUT *****/
+
+/***** CALENDAR *****/
+
+body .ui-datepicker .ui-datepicker-header {
+    background: #002547;
+    border-color: #424242;
+	color: #FFFFFF;
+}
+body .ui-datepicker .ui-timepicker {
+    background: #EAEAEA;
+}
+body .ui-datepicker.ui-shadow {
+    background: #FFFFFF;
+}
+
+/***** / CALENDAR *****/
+
+.ui-g.login-details {
+	width: 50% !important;
+}
+.login-button {
+    width: 275px !important;
+}
+
+.material-icons {
+    margin: 4px 4px 0px 0px !important;
+	display: inline-block;
+}
+
+body {
+    overflow: hidden;
+}
+
+body .layout-wrapper.layout-compact {
+	/*line-height: 1.65rem;*/
+	line-height: 1;
+}
+body .ui-tabview .ui-tabview-panel {
+    background: #FFFFFF;
+}
+.chart-container canvas {
+	height: 85% !important;
+	width: 85% !important;
+	padding: 1rem 0rem;
+}
+/*.chart-container {
+	padding: 0rem 0rem 1rem 0rem;
+}*/
+/*.p-grid.container {
+	background: #FFFFFF;
+}*/
+.details {
+	background: #FFFFFF;
+	padding: 6px;
+	margin: 0rem 10px;
+	
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.row-container, .p-grid.item {
+    border-bottom: 1px solid #D8D8D8;
+}
+
+.p-grid.container.ng-star-inserted {
+	/*width: 50%;*/
+}
+p-tabView {
+    overflow-y: scroll;
+	padding: 18px 18px 6px 6px;
+}
+.p-col-6.cube {
+    /*width: calc(50% - 10px) !important;*/
+}
+body .ui-dialog .ui-dialog-titlebar {
+    /*background-color: #002547;*/
+	
+	background: #002547;
+	background: -moz-linear-gradient(-45deg, #002547 0%, #0499E6 100%);
+	background: -webkit-linear-gradient(-45deg, #002547 0%,#0499E6 100%);
+	background: linear-gradient(135deg, #002547 0%,#0499E6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002547', endColorstr='#0499E6',GradientType=1 );	
+	
+    color: #FFFFFF;
+}
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .pi {
+    color: #EAEAEA;
+}
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .pi:hover, body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .pi:focus {
+    color: #757575;
+}
+body .ui-datatable .ui-datatable-thead > tr th {
+    background-color: #0499E6 !important;
+	color: #FFFFFF !important;
+}
+body .ui-dialog .ui-dialog-content {
+    background: #FFFFFF !important;
+	/*color: #EAEAEA;*/
+    padding: 0rem 1.65rem 1.65rem 1.65rem;
+}
+#settings-container .flex-row {
+	border-bottom: 1px solid #D8D8D8;
+}
+body .ui-datatable .ui-datatable-data tr td {
+	background: #FFFFFF;
+}
+
+/*.ui-table-scrollable-body {
+	max-height: 100px !important;
+}*/
+
+.widget {
+    height: auto !important;
+	overflow: hidden !important;
+}
+.ui-table-scrollable-body {
+    overflow-y: scroll !important;
+	max-height: 24vh !important;
+}
+
+.material-icons {
+    color: #1A518A;
+}
+.ripplelink img {
+	display: inline-block;
+}
+
+#settings-container .flex-row {
+    border-bottom: 1px solid #D8D8D8;
+	margin-bottom: 1.65rem;
+	/*padding-bottom: 1.65rem;*/
+}
+.ui-dialog-content.ui-widget-content {
+	max-height: 100% !important;
+}
+
+body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button-warning > .ui-button.ui-state-default {
+    color: #FFFFFF !important;
+    background-color: #1A518A !important;
+}
+body .ui-button.ui-state-default.ui-button-warning:hover, body .ui-button.ui-state-default.ui-button-warning:focus, body .ui-buttonset.ui-button-warning > .ui-button.ui-state-default:hover, body .ui-buttonset.ui-button-warning > .ui-button.ui-state-default:focus {
+    color: #FFFFFF !important;
+    background-color: #002547 !important;
+}
+
+/***** TABS *****/
+
+body .ui-tabview .ui-tabview-nav > li {
+	border: none;	
+}
+body .ui-tabview .ui-tabview-nav > li.ui-state-default a {
+	color: #D8D8D8;
+	background-color: #002547;
+
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;		
+	
+	-webkit-transition: all .35s ease-in-out;
+	-moz-transition: all .35s ease-in-out;
+	-ms-transition: all .35s ease-in-out;
+	-o-transition: all .35s ease-in-out;
+	transition: all .35s ease-in-out;	
+}
+body .ui-tabview .ui-tabview-nav > li.ui-state-active {
+    color: #FFFFFF !important;
+    background-color: #0499E6 !important;
+}
+body .ui-tabview .ui-tabview-nav > li.ui-state-active .ui-tabview-left-icon {
+    color: #FFFFFF !important;
+}
+
+body .ui-tabview.ui-tabview-top > .ui-tabview-nav > li {
+	border: none !important;
+}
+body .ui-tabview.ui-tabview-top > .ui-tabview-nav > li.ui-state-active {
+	background-color: transparent !important;
+}
+
+
+/** DX TABS **/
+
+.dx-tabs {
+    border: none;
+}
+.dx-tab {
+    /*background-color: #1A518A;*/
+	background-color: #002547;
+	background-color: rgba(0,37,71,0.35);
+	color: #D8D8D8;
+	
+	-webkit-transition: all .35s ease-in-out;
+	-moz-transition: all .35s ease-in-out;
+	-ms-transition: all .35s ease-in-out;
+	-o-transition: all .35s ease-in-out;
+	transition: all .35s ease-in-out;	
+	
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;	
+}
+.dx-tab:hover, .dx-tab:focus {
+    background-color: #002547;
+	color: #D8D8D8;
+}
+.dx-tab.dx-tab-selected {
+    background-color: #0499E6;
+    color: #FFFFFF;
+}
+.dx-tab-selected::after {
+    border-right: 1px solid #002547;
+    border-left: 1px solid #002547;
+	display: none;
+}
+
+.dx-tab .dx-icon {
+	color: #D8D8D8;
+}
+.dx-tab-selected .dx-icon {
+    color: #FFFFFF;
+}
+
+.dx-tabs-nav-button {
+    background-color: #424242;
+	color: #D8D8D8;
+}
+.dx-button-mode-contained .dx-icon {
+	color: #FFFFFF;
+}
+
+/** / DX TABS **/
+/** DX SCROLLABLE TABS **/
+
+.dx-tabs-scrollable .dx-tabs-wrapper {
+	border: none;
+}
+.dx-tabs-nav-buttons .dx-tabs-scrollable .dx-tabs-wrapper {
+    border: none;
+}
+.dx-tabs-scrollable {
+    margin: 0px;
+    height: 100%;
+}
+
+/** / DX SCROLLABLE TABS **/
+
+/***** / TABS *****/
+
+body .ui-tabview .ui-tabview-panel {
+    overflow: hidden;
+}
+
+
+/*************** / OVERWRITES ***************/
+.ui-dropdown-items-wrapper {
+    background-color: $white;
+}
+
+* {
+    outline: 0;
+}
+
+.hidden-xs {
+    @include media-xs() {
+        display: none !important;
+    }
+}
+
+.visible-xs {
+    @include media-gt-xs() {
+        display: none !important;
+    }
+}

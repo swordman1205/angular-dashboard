@@ -1,0 +1,8 @@
+.layout {
+  display: grid;
+  height: calc(100% - 95px);
+  grid-gap: 20px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100%;
+  margin: 16px;
+}

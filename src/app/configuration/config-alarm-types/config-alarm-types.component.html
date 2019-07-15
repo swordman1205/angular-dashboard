@@ -1,0 +1,205 @@
+<p-blockUI [target]="confgAlarmTypes" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<app-blocker #confgAlarmTypes>
+    <div class="alarm-types-container">
+        <div class="list-container">
+            <p-listbox [options]="Items" [(ngModel)]="CurrECSObject" filter="true" dataKey='ID'>
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 5px" width="16">
+                        <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22"> -->
+                        <span style="text-align:left;padding:5px 5px 0 5px">{{item.value.Name}}</span>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+
+        <div class="details">
+            <div class="content" *ngIf='CurrECSObject'>
+
+                <!-- Name Row -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-3">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="ui-grid-col-4">
+                        <input name="name" type="text" pInputText #name="ngModel" [(ngModel)]="CurrECSObject.Name"
+                            pKeyFilter="alphanum" [pValidateOnly]="true" (change)='dirtifyItem()' ngModel required
+                            birthYear>
+                    </div>
+                    <div class="ui-grid-col-2">
+                        <!-- <p-message severity="error" text="Name is required" *ngIf="name.invalid"></p-message> -->
+                        <show-errors [control]="name"></show-errors>
+                    </div>
+                </div>
+
+                <!-- Default Row -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-3">
+                        <label for="deflt">Default</label>
+                    </div>
+
+                    <div class="ui-grid-col-3">
+                        <p-radioButton name="deflt" [(ngModel)]='isDefDelay' label="{{'CONFIG_ALARM_TYPES.DEFAULT_DELAY' | translate}}"
+                            (onClick)='defDelayClicked($event.target.value)'></p-radioButton>
+                    </div>
+                    <div class="ui-grid-col-3">
+                        <p-spinner [step]=1 [min]=0 [(ngModel)]='defDelayVal' (onChange)='defDelayValChanged($event.target.value)'></p-spinner>
+                    </div>
+                    <div class="ui-grid-col-3">
+                        <p-radioButton name="deflt" [(ngModel)]='CurrECSObject.AlarmBypass' label="{{'CONFIG_ALARM_TYPES.DEFAULT_BYPASS' | translate}}"
+                            (onClick)='defBypassClicked($event.target.value)'></p-radioButton>
+                    </div>
+
+                </div>
+
+                <!-- Custom Row (Weekdays Widget) -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-3">
+                        <label for="deflt">Custom</label>
+                    </div>
+
+                    <div class="ui-grid-col-9">
+
+                        <!-- Scheduler -->
+                        <div class="ui-grid-row" style="margin: 10px 20px;width: 100%" (dblclick)='schedDivClick($event)'>
+                            <dx-chart id="chart" [rotated]='true' palette="violet" title="" [dataSource]="schedData"
+                                (onPointClick)='custSchedClick($event)'>
+                                <!-- (onSeriesClick)="onSeriesClick($event)"   [customizePoint]="customizePoint"-->
+                                <dxo-legend [visible]='false'></dxo-legend>
+                                <dxo-tooltip [enabled]="true" [customizeTooltip]="getAlarmTooltip">
+                                </dxo-tooltip>
+                                <dxo-common-series-settings argumentField="day" barPadding="0.3" type="rangeBar"
+                                    ignoreEmptyPoints='false'></dxo-common-series-settings>
+                                <dxi-value-axis argumentType='numeric' [min]='0' [max]='1440' [tickInterval]="60">
+                                    <dxo-grid [visible]='false'>
+                                    </dxo-grid>
+                                    <dxo-label [customizeText]="getAlarmTime">
+                                    </dxo-label>
+                                    <dxi-constant-line [value]='0' color='#676b7e' dashStyle='longDash' [width]='5'>
+                                        <dxo-label [visible]="false"></dxo-label>
+                                    </dxi-constant-line>
+                                </dxi-value-axis>
+                                <dxo-argument-axis [inverted]='true' argumentType='day' type="discrete" [categories]="arrDays"
+                                    color='#d3d3ff'>
+                                    <dxo-grid [visible]='true'></dxo-grid>
+                                </dxo-argument-axis>
+                                <dxi-series type="rangebar" rangeValue1Field="startMinute" rangeValue2Field="endMinute"
+                                    tagField='info' color='#718f98'>
+                                    <dxo-label [customizeText]="getAlarmLabel" [visible]='true' position='inside' color='#166f98'>
+                                    </dxo-label>
+                                    <!-- <dxo-point color="pink"> 
+                                    </dxo-point> -->
+                                </dxi-series>
+                            </dx-chart>
+                        </div>
+
+                        <!-- CUSTOM Schedule Add/Update/Delete Popup -->
+                        <dx-popup class="popup" *ngIf='currSchedItem' [width]="295" [height]="375" titleTemplate="title"
+                            [(visible)]="isPopupVisible" [shading]="true" shadingColor="rgba(0, 0, 0, 0.4)">
+                            <div *dxTemplate="let data of 'title'" style="padding: 7px 15px 7px 5px; background: rgb(211, 208, 208)">
+                                <div class="dx-field">
+                                    <div class="dx-field-label" style='font-size: 18px; font-weight: bold; width: auto'>Scheduled
+                                        Alarm
+                                    </div>
+                                    <div class="dx-field-value" style="align-content: right; width: 125px; margin-top: 3px">
+                                        <dx-button icon='fas fa-times-circle' style="margin:0 5px 0 5px" (onClick)='isPopupVisible=false'
+                                            type="default">
+                                        </dx-button>
+                                        <dx-button icon='fas fa-sync-alt' style="margin:0 5px 0 5px" (onClick)='refreshSchedPopup($event)'
+                                            type="default">
+                                        </dx-button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *dxTemplate="let data of 'content'">
+                                <div class="dx-field">
+                                    <div class="dx-field-label">Day: </div>
+                                    <div class="dx-field-value">
+                                        <dx-select-box [dataSource]='optWeekdays' [(value)]='currSchedItem.weekDay'
+                                            displayExpr='label' valueExpr='value'>
+                                            <!-- [(displayValue)]='value' -->
+                                        </dx-select-box>
+                                    </div>
+                                </div>
+                                <div class="dx-field">
+                                    <div class="dx-field-label">From: </div>
+                                    <div class="dx-field-value">
+                                        <dx-date-box #datBoxFrom [(value)]="currSchedItem.fromTime" type="time"
+                                            [isValid]='currSchedItem.fromTime < currSchedItem.toTime'>
+                                        </dx-date-box>
+                                    </div>
+                                </div>
+                                <div class="dx-field" style='margin-bottom: 10px'>
+                                    <div class="dx-field-label">To: </div>
+                                    <div class="dx-field-value">
+                                        <dx-date-box #datBoxTo [(value)]="currSchedItem.toTime" type="time" [isValid]='currSchedItem.toTime > currSchedItem.fromTime'>
+                                            <!-- (onValueChanged)=appontStartChanged($event)-->
+                                        </dx-date-box>
+                                    </div>
+                                </div>
+
+                                <div class="dx-field">
+                                    <div class="dx-field-label">{{'CONFIG_ALARM_TYPES.CUSTOM_DELAY' | translate}}</div>
+                                    <div class="dx-field-value">
+                                        <!-- <dx-check-box [value]="isCustDelay"></dx-check-box> -->
+                                        <dx-number-box [value]="custDelayVal" [step]='1' [min]='0' [showSpinButtons]="true"
+                                            [showClearButton]="true" (onValueChanged)='custDelayValChanged($event)'
+                                            invalidValueMessage='Input should be a valid numnber equal or greater than 1'
+                                            number></dx-number-box>
+                                    </div>
+                                </div>
+                                <div class="dx-field">
+                                    <div class="dx-field-label">{{'CONFIG_ALARM_TYPES.CUSTOM_BYPASS' | translate}}</div>
+                                    <div class="dx-field-value">
+                                        <dx-check-box [value]="isCustBypass" (onValueChanged)='custBypassChanged($event)'></dx-check-box>
+                                    </div>
+                                </div>
+
+                                <div class="dx-field" style='margin: 10px, 10px'>
+                                    <dx-button (onClick)='updateCustSched($event)' [disabled]='!(datBoxFrom.isValid && datBoxTo.isValid)'
+                                        icon='fas fa-times-circle' style="margin:0 5px 0 5px" type="default">Update</dx-button>
+                                    <dx-button (onClick)='deleteCustSched($event)' icon='fas fa-times-circle' style="margin:0 5px 0 5px"
+                                        type="default"> Delete</dx-button>
+                                </div>
+
+                            </div>
+
+                        </dx-popup>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="buttons-container">
+                <span class="md-inputfield align-this-end">
+                    <button pButton type="button" label="Add Alarm Type" (click)='addAlarmType($event) '></button>
+                    <button pButton type="button" label="Remove Alarm Type" (click)='removeEcsObject($event) '></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</app-blocker>

@@ -1,0 +1,29 @@
+TODO:
+=====
+Font Awesome - fix
+RXJS - change observables & observers with NGRX
+NGRX Store
+Components strategy - to update only if necessary (onPush)
+Forms
+
+DONE:
+=====
+Upgrade NodeJS 8.11.3
+Upgrade angular/cli:
+    npm uninstall -g angular-cli
+    npm install -g @angular/cli@latest
+
+Angular 6 Upgrade - changes with RXJS, styling fixes, imports
+PrimeNG 6 Upgrade
+NPM package updated
+
+Erez - server location:2 get timeout
+
+"GetLocationStatuses" locationID:"2"
+{"$id":"481308","$type":"ECS.Json.Enteties.JsonResponse, ECS.Json","Action":"GetLocationStatusesResponse","HasError":true,"ReturnValue":{"$id":"481309","$type":"ECS.Formatters.ECSXmlException, ECS.Formatters","faultcode":"","faultstring":"InvoceRPC(JsonRequest apiRequest) - Error occurred during attempt to invoke Method: GetLocationStatuses. Error: Could not find any resources appropriate for the specified culture or the neutral culture.  Make sure \"Fusion.Common.Resources.OperationalErrorDetails.resources\" was correctly embedded or linked into assembly \"Fusion.Common\" at compile time, or that all the satellite assemblies required are loadable and fully signed.","detail":"Could not find any resources appropriate for the specified culture or the neutral culture.  Make sure \"Fusion.Common.Resources.OperationalErrorDetails.resources\" was correctly embedded or linked into assembly \"Fusion.Common\" at compile time, or that all the satellite assemblies required are loadable and fully signed.. "}}
+
+
+
+
+
+Logger: https://www.bennadel.com/blog/3129-implementing-a-log-inspired-logging-service-in-angular-2-rc-4.htm

@@ -1,0 +1,28 @@
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.label-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.no-active-label {
+  font-size: 24px;
+  align-self: center;
+}
+
+p-chart {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  flex-basis: 50%;
+}
+
+:host {
+  /deep/ p-chart > div {
+    height: 100%;
+  }
+}

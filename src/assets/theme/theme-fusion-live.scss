@@ -1,0 +1,71 @@
+$primaryColor: #35373c;
+$primaryDarkColor: #424242;
+$primaryLightColor: #EEEEEE;
+
+$accentColor: #3FBA2A;
+
+$accentDarkColor: #D84315;
+$accentLightColor: #FFAB91;
+$accentTextColor: #ffffff;
+
+@import '../sass/theme/_theme';
+
+body .ui-table .ui-table-thead > tr > th, body .ui-table .ui-table-tfoot > tr > td {
+  border: 0 solid #FFFFFF;
+  background-color: #292d39;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bolder;
+  text-align: inherit;
+  font-family: "Open Sans";
+}
+
+body .ui-table .ui-table-scrollable-header {
+  border-radius: 6px;
+}
+
+body .ui-table .ui-table-tbody > tr {
+  background: #FFFFFF;
+}
+
+body .ui-table .ui-table-tbody > tr:nth-child(odd) {
+  background: #D8D8D8;
+}
+
+body .ui-table .ui-table-tbody > tr > td {
+  border: 0px solid #EAEAEA;
+  border-bottom: 2px solid #7b7b7b;
+  line-height: 27px;
+	color: #D8D8D8;
+  background: #FFFFFF;
+}
+
+body .ui-table .ui-table-tbody > tr:last-child > td {
+  border: 0px solid #EAEAEA;
+}
+
+body .ui-table .ui-table-tbody > tr > td {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body .ui-table .ui-table-tbody > tr > td > a:-webkit-any-link {
+  text-decoration: underline;
+  font-family: "Open Sans";
+  color: #5837f9;
+  font-weight: bold;
+}
+
+body .ui-tabmenu .ui-tabmenu-nav {
+  background-color: unset;
+}
+
+.ui-treenode-label {
+  color: #FFFFFF;
+}
+
+.ui-treenode-icon {
+  color: #FFFFFF;
+}

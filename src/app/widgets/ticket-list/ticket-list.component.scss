@@ -1,0 +1,48 @@
+:host /deep/ {
+  .ui-datepicker .ui-datepicker-group {
+    background-color: #FFFFFF !important;
+  }
+}
+
+#filter-container {
+  display: flex;
+  min-width: 666px;
+  padding-top: 20px;
+}
+
+.all-ticket-lbl {
+  padding-right: 10px;
+}
+
+.open-ticket-lbl {
+  padding-left: 10px;
+}
+
+#filter-params {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  margin-top: -5px;
+  .label-from {
+    margin-right: 10px;
+  }
+  .label-to {
+    margin: 0 10px;
+  }
+}
+
+#execute-container {
+  position: relative;
+}
+
+#execute {
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+  height: 25px;
+  line-height: 25px;
+}
+
+#table-container {
+  height: calc(100% - 100px);
+}

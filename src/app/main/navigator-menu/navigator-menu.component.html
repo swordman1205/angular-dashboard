@@ -1,0 +1,25 @@
+<ng-template ngFor let-child let-i="index" [ngForOf]="(root ? item : item.items)">
+    <li class="fl-nav-item" [ngClass]="{'active-menuitem': isActive(i)}" [class]="child.badgeStyleClass" *ngIf="child.visible === false ? false : true">
+
+        <div>
+            <a (click)="main.navItemClick($event,child,i)" (mouseenter)="onMouseEnter(i)" class="ripplelink" *ngIf="child.routerLink"
+                [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
+                <fa-icon [icon]="['fas', child.icon]"></fa-icon>
+                <span class="item-name">{{child.label}}</span>
+
+                <!-- <i *ngIf='main.adminMode' 
+                    class="far fa-cog" 
+                    style="align-content:center; padding:5px 15px 5px 15px" 
+                    (click)="main.navConfigClick($event, child, i)"               
+                    pTooltip="Configuration"></i> -->
+                                
+                <img *ngIf="child.statusIcon" [src]="child.statusIcon" style="width: 20px; height: 20px;" align="right">
+            </a>
+        </div>
+        <div class="layout-menu-tooltip">
+            <div class="layout-menu-tooltip-arrow"></div>
+            <div class="layout-menu-tooltip-text">{{child.label}}</div>
+        </div>
+
+    </li>
+</ng-template>

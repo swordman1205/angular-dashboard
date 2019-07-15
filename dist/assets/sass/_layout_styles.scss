@@ -1,0 +1,15 @@
+/* Add your customizations of layout here */
+.layout-container {
+  .layout-menu {
+    z-index: 999999;
+  }
+
+  .topbar {
+    .logo {
+      width: 138px;
+      height: 29px;
+      background: url(../images/logo-alt.png) top left no-repeat;
+      background-size: 138px 29px;
+    }
+  }
+}

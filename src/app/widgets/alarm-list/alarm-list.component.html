@@ -1,0 +1,74 @@
+<div class="fl-header">
+    <H3 translate class="fl-widget-header">WIDGETS.ALARM_LIST.TITLE</H3>
+
+    <button (click)="getData()" translate class="fl-refresh-btn">
+        <i class="far fa-sync-alt"></i>
+    </button>
+</div>
+
+<p-table #alarmListGridTbl
+         [value]="data"
+         [scrollable]="true"
+         scrollHeight="100%"
+         [loading]="loading"
+         [responsive]="true"
+         [globalFilterFields]="['LocationName','AssetName','ObjectName',
+                                    'AssetMeasureName', 'StatusTimestampParsed', 'LastUpdateParsed',
+                                    'LastValueParsed', 'StatusTimestampDurationParsed', 'statusViewParsed']">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.LOCATION' | translate}}</th>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.ASSET' | translate}}</th>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.ASSET_MEASURE' | translate}}</th>
+            <th class="time-col">{{'WIDGETS.ALARM_LIST.COLUMNS.STARTED_ON' | translate}}</th>
+            <th class="time-col">{{'WIDGETS.ALARM_LIST.COLUMNS.LAST_CHECK' | translate}}</th>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.LAST_VALUE' | translate}}</th>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.DURATION' | translate}}</th>
+            <th>{{'WIDGETS.ALARM_LIST.COLUMNS.STATUS' | translate}}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data>
+        <tr>
+            <td class="three-dots" title="{{data.LocationName}}">
+                <a [routerLink]="[ '/location/' + data.LocationID + '/locationDashboard/widgets']">
+                    {{data.LocationName}}
+                </a>
+            </td>
+
+            <td class="three-dots" title="{{data.AssetName}}">
+                <a [routerLink]="[ '/asset/' + data.AssetID + '/assetDashboard/widgets']">
+                    <span>{{data.AssetName !== '' ? data.AssetName : data.ObjectName}}</span>
+                </a>
+            </td>
+
+            <td class="three-dots" title="{{data.AssetMeasureName}}">
+                <a [routerLink]="[ '/assetMeasure/' + data.AssetMeasureID + '/assetMeasureDashboard/widgets']">
+                    {{data.AssetMeasureName}}
+                </a>
+            </td>
+
+            <td class="three-dots time-col" title="{{data.StatusTimestampParsed}}">
+                <i class="far fa-clock" aria-hidden="true"></i> {{data.StatusTimestampParsed}}
+            </td>
+
+            <td class="three-dots time-col" title="{{data.LastUpdateParsed}}">
+                <i class="far fa-clock" aria-hidden="true"></i> {{data.LastUpdateParsed}}
+            </td>
+
+            <td class="three-dots" title="{{data.LastValueParsed}}">
+                {{data.LastValueParsed}}
+            </td>
+
+            <td class="three-dots" title="{{data.StatusTimestampDurationParsed}}">
+                {{data.StatusTimestampDurationParsed}}
+            </td>
+
+            <td class="three-dots" title="{{data.statusViewParsed}}">
+                {{data.statusViewParsed}}
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>

@@ -1,0 +1,91 @@
+::ng-deep .item-badge {
+    text-align: center;
+      float: left;
+      margin-right: 12px;
+      color: white;
+    width: 18px;
+      height: 18px;
+      font-size: 16px;
+      border-radius: 18px;
+      margin-top: 2px;
+  }
+
+  
+::ng-deep .dx-tooltip-wrapper .dx-overlay-content .dx-popup-content {
+    padding: 14px;
+}
+
+::ng-deep .schedule-preview > div:first-child {
+    font-size: 11px;
+    white-space: normal;
+}
+
+::ng-deep .schedule-preview > div:not(:first-child) {
+    font-size: 10px;
+    white-space: normal;
+}
+
+::ng-deep .resource-tooltip .resource-info {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+    text-align: left;
+}
+
+::ng-deep .resource-tooltip img {
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+::ng-deep .resource-tooltip .resource-title {
+    font-size: 1.5em;
+    line-height: 40px;
+}
+
+::ng-deep .long-title h3 {
+    font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+    font-weight: 200;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.list-container {
+    overflow: auto;
+    justify-content: flex-start;
+    height: 100%;
+    width: 235px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+.list-container-full {
+    overflow: auto;
+    justify-content: flex-start;
+    height: 100%;
+    width: calc(100% - 285px);
+    background: #FFFFFF;
+    border-radius: 6px;
+    margin: 10px;
+} 
+
+.scheduler-container {
+    overflow: auto;
+    justify-content: flex-start;
+    height: calc(100% - 285px);
+    width: 100%;
+    background: white;
+    border: 1px solid #777777;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+p-listbox {
+    display: flex;
+    height:calc(100% - 24px);
+    // width: calc(100% - 24px);
+    margin: 7px;
+    padding: 7px;
+}

@@ -1,0 +1,17 @@
+.layout {
+  display: grid;
+  height: calc(100% - 108px);
+  grid-gap: 20px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100%;
+  margin: 16px;
+}
+
+.widget {
+  height: 100%;
+  border-radius: 5px;
+  overflow-y: hidden;
+  background-color: rgba(255, 255, 255, 0.92);
+  padding-left: 10px;
+  padding-right: 10px;
+}

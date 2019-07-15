@@ -1,0 +1,62 @@
+<div class='config-devices-measurement'>
+    <p-table #tblMeasurements [columns]="measureCols" [value]="dvcTypePorts" selectionMode="single" dataKey="ID"
+        [(selection)]="selDevicePort" [responsive]="true" (onRowSelect)='rowSelected($event)'
+        (onRowUnselect)='rowUnselected($event)'>
+        <!-- Columns -->
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <!-- <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    <div *ngIf="col.field === 'Icon'" style="width: 75px">
+                    </div>
+                    <div *ngIf="col.field !== 'Icon'">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" *ngIf='col.sortable'></p-sortIcon>
+                    </div>
+                </th>
+                <th>
+                    Measurement
+                </th> -->
+                <th style="width: 45px"></th>
+                <th pSortableColumn="Name" style="width: 120px">Port
+                    <p-sortIcon field="Name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="PortType" style="width: 120px">Type
+                    <p-sortIcon field="PortType"></p-sortIcon>
+                </th>
+                <th>Measurement</th>
+            </tr>
+        </ng-template>
+
+        <!-- Body (rows of Data) -->
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <i *ngIf="col.field === 'Icon'" class='fa fa-thermometer-quarter'></i>
+                    <div *ngIf="col.field !== 'Icon'">
+                        {{rowData[col.field]}}
+                    </div>
+                </td>
+                <td>
+                    <div class="p-grid" (click)='setEditMode($event, rowData)'>
+                        <div class="p-col-2">
+                            <label for="asset">Asset: </label>
+                        </div>
+                        <div class="p-col" style='justify-content: left; align-self: flex-start'>
+                            <label *ngIf="rowData['EditMode'] === false">{{rowData['Measurement']?.asset?.Name}}</label>
+                            <p-dropdown id="asset" *ngIf="rowData['EditMode']" [options]="assetOptions"
+                                [(ngModel)]="selAsset" (onChange)='astComboChanged()'></p-dropdown>
+                        </div>
+                        <div class="p-col-2">
+                            <label for="measure">Measure: </label>
+                        </div>
+                        <div class="p-col" style='justify-content: left; align-content: flex-start'>
+                            <label *ngIf="rowData['EditMode'] === false">{{rowData['Measurement']?.asm?.Name}}</label>
+                            <p-dropdown id="measure" *ngIf="rowData['EditMode']" [options]="asmOptions"
+                                [(ngModel)]="selAsm" (onChange)='asmComboChnaged($event)'></p-dropdown>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

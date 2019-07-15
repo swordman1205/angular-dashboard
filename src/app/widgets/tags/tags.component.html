@@ -1,0 +1,65 @@
+<div id="settings-container">
+    <!-- Location Tags -->
+    <h4 translate>SETTINGS.TAGS_SETTINGS.LOCATION_TAGS</h4>
+
+    <div class="flex-row">
+        <ul>
+            <li *ngFor="let locationTag of availableLocationTags"
+                class="ui-state-default ui-helper-clearfix"
+                pDraggable="locationTags"
+                (onDragStart)="dragLocationTagStart($event, locationTag)"
+                (onDragEnd)="dragLocationTagEnd($event)">
+                <i class="material-icons">home</i>
+                <i class="fa fa-arrows fa-2x" style="float:right;margin-top:8px"></i>
+                <span>{{locationTag.name}}</span>
+        </ul>
+
+        <div class="ui-widget-content"
+             pDroppable="locationTags"
+             (onDrop)="dropLocationTag($event)">
+            <p-dataTable [value]="selectedLocationTags" dataKey="selectedLocationTag">
+                <p-column field="name"
+                          header="{{'SETTINGS.TAGS_SETTINGS.NAME' | translate}}"></p-column>
+                <p-column header="Clear">
+                    <ng-template let-col let-locationTag="rowData" pTemplate="body">
+                        <button pButton type="button" label="CLEAR"
+                                class="ui-button-warning"
+                                (click)="onRemoveLocationTag(locationTag)"></button>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+
+    <!-- Asset Tags -->
+    <h4 translate>SETTINGS.TAGS_SETTINGS.ASSET_TAGS</h4>
+
+    <div class="flex-row">
+        <ul>
+            <li *ngFor="let assetTag of availableAssetTags"
+                class="ui-state-default ui-helper-clearfix"
+                pDraggable="assetTags"
+                (onDragStart)="dragAssetTagStart($event, assetTag)"
+                (onDragEnd)="dragAssetTagEnd($event)">
+                <i class="material-icons">home</i>
+                <i class="fa fa-arrows fa-2x" style="float:right;margin-top:8px"></i>
+                <span>{{assetTag.name}}</span>
+        </ul>
+
+        <div class="ui-widget-content"
+             pDroppable="assetTags"
+             (onDrop)="dropAssetTag($event)">
+            <p-dataTable [value]="selectedAssetTags" dataKey="selectedAssetTag">
+                <p-column field="name"
+                          header="{{'SETTINGS.TAGS_SETTINGS.NAME' | translate}}"></p-column>
+                <p-column header="Clear">
+                    <ng-template let-col let-assetTag="rowData" pTemplate="body">
+                        <button pButton type="button" label="CLEAR"
+                                class="ui-button-warning"
+                                (click)="onRemoveAssetTag(assetTag)"></button>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

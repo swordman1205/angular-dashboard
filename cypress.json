@@ -1,0 +1,11 @@
+{
+  "chromeWebSecurity": false,
+  "defaultCommandTimeout": 10000,
+  "env": {
+    "user": "admin",
+    "password": "admin",
+    "baseUrl": "http://localhost:4200"
+  }
+}
+
+

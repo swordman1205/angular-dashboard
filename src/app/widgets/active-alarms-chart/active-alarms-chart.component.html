@@ -1,0 +1,17 @@
+<div class="fl-header">
+  <H3 translate class="fl-widget-header">WIDGETS.ACTIVE_ALARMS.TITLE</H3>
+
+  <button (click)="getData()" translate class="fl-refresh-btn">
+    <i class="far fa-sync-alt"></i>
+  </button>
+</div>
+
+<p-blockUI [target]="openTicketsChart" [blocked]="loading">
+  <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute;top:48%;left:50%"></i>
+</p-blockUI>
+
+<div class="chart-container">
+  <app-blocker #openTicketsChart>
+    <p-chart type="doughnut" [data]="data" [options]="options"></p-chart>
+  </app-blocker>
+</div>

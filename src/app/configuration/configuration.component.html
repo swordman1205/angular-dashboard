@@ -1,0 +1,45 @@
+ <div class='layout'>
+    <dx-toolbar
+        [items]="toolbarButtons">
+    </dx-toolbar>
+
+    <div class='content'>
+        <dx-drawer 
+                openedStateMode="push"
+                position="left"
+                revealMode="slide"
+                template="tab"
+                [opened]="true"
+                closeOnOutsideClick="false" 
+                [width]="400"
+                [height]="600">
+            <div *dxTemplate="let item of 'tab'; let tabIndex = index">
+                <dx-list #configTabs class="panel-list dx-theme-accent-as-background-color"
+                        [dataSource]="tabs"
+                        template="item"
+                        selectionMode="single"
+                        (onItemClick)="onTabChanged($event)"
+                        [width]="250" height="auto"> 
+                    <div *dxTemplate="let item of 'item'; let itmIndex = index" class='tabs' >
+                        <i [class]="item.icon" style='width: 32px'></i>
+                        <div>{{item.text}}</div>
+                        <i *ngIf='item.isDirty' class="far fa-exclamation" style="margin-left: 7px"></i>
+                    </div>
+                </dx-list>
+            </div>
+        </dx-drawer>
+
+        <router-outlet></router-outlet>
+
+    </div>
+</div>
+<!-- <div class="buttons-container" style='padding-top: 20px; padding-right: 20px'>
+    <button (click)="refreshHandler()" translate class="fl-refresh-btn" pTooltip="{{'WIDGETS.REFRESH' | translate}}">
+        <i class="far fa-sync-alt"></i>
+    </button>
+    <button (click)="saveHandler()" translate class="fl-refresh-btn" pTooltip="{{'WIDGETS.SAVE' | translate}}">
+        <i class="fal fa-save"></i>
+    </button>
+</div> -->
+
+

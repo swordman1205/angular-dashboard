@@ -1,0 +1,13 @@
+<section class="digital-section">
+    <div class="am-name pt5 pb5">{{data.AssetMeasureName}}</div>
+    <div class="am-status pb5">{{statusTimestamp}}</div>
+
+    <div class="pb5">
+        <span class="boolean-string"> {{data.FalseString}} </span>
+        <ui-switch size="large" color="#5cb85c"
+                   [checked]="defaults.NAFEM_TRUE == data.Value"></ui-switch>
+        <span class="boolean-string"> {{data.TrueString}} </span>
+    </div>
+
+    <div class="boolean-string">{{status}}</div>
+</section>

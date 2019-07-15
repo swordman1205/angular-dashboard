@@ -1,0 +1,125 @@
+<p-dialog header="Item Images" [(visible)]="flgDisplayDlg" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+    [minY]="70" [baseZIndex]="10000">
+    <!-- <p-listbox appendTo="body" [options]="lstOpts" [(ngModel)]="selDialgItm" (onChange)='imageSelected($event)'>
+    </p-listbox> -->
+    <!-- <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="onDialogOK($event)" label="OK"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="flgDisplayDlg=false" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer> -->
+</p-dialog>
+
+
+<div class='config-items-intellitask' *ngIf='checkItem'>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+        <!--  Data Row -->
+        <div class="ui-grid-row" style="width: 100%">
+
+            <!-- Template Table -->
+            <div class="ui-grid-col-5">
+                <h3>Templates</h3>
+                <p-table #tblTemplates [value]="templates" selectionMode="single" dataKey='ID' filter='true' [(selection)]="selTemplate"
+                    [responsive]="true" [globalFilterFields]="['Name']">
+                    <ng-template pTemplate="caption">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tblTemplates.filterGlobal($event.target.value,'contains')"
+                            style="width:auto">
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="Name">Name
+                                <p-sortIcon field="Name"></p-sortIcon>
+                            </th>
+                            <th>Start Temp</th>
+                            <th>Mark Temp</th>
+                            <th>Time Span</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr [pSelectableRow]="rowData">
+                            <td>{{rowData['Name']}}</td>
+                            <td>{{rowData['StartTemperature'] + ' ' + rowData['Unit']['Name']}}</td>
+                            <td>{{rowData['MarkTemperature'] + ' ' + rowData['Unit']['Name']}}</td>
+                            <td>{{rowData['Timespan']}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+            <!-- Moving To/From Template Buttons -->
+            <div class="ui-grid-col-1" style="height: 100%">
+                <div class="ui-grid-row">
+                    <button type="button" pButton icon="fa fa-angle-double-right" (click)="addRule($event)"></button>
+                </div>
+                <div class="ui-grid-row">
+                    <button type="button" pButton icon="fa fa-angle-double-left" (click)="removeRule($event)"></button>
+                </div>
+            </div>
+
+            <!-- Rules Table -->
+            <div class="ui-grid-col-5">
+                <h3>Rules</h3>
+                <p-table #tblRules [value]="rules" selectionMode="single" dataKey='ID' filter='true' [(selection)]="selRule" [responsive]="true"
+                    (onRowSelect)='rowSelected($event)' (onRowUnselect)='rowUnselected($event)' [globalFilterFields]="['Name']">
+                    <ng-template pTemplate="caption">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tblRules.filterGlobal($event.target.value,'contains')"
+                            style="width:auto">
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="Ordinal" style="width: 75px">#
+                                <p-sortIcon field="Ordinal"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="Name">Name
+                                <p-sortIcon field="Name"></p-sortIcon>
+                            </th>
+                            <th>Start Temp</th>
+                            <th>Mark Temp</th>
+                            <th>Time Span</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr [pSelectableRow]="rowData">
+                            <td>{{rowData['Ordinal'] + 1}}</td>
+                            <td>
+                                <div class="ui-grid-row" (click)='setRuleNameEditMode($event, rowData)' (blur)="rowData['NameInEdit'] = false">
+                                    <label *ngIf="!rowData['NameInEdit']">{{rowData['Name']}}</label>
+                                    <input type="text" pInputText *ngIf="rowData['NameInEdit']" [(ngModel)]="rowData['Name']" (input)='dirtifyRule($event, rowData)'>
+                                </div>
+                            </td>
+                            <td>{{rowData['StartTemperature'] + ' ' + rowData['Unit']['Name']}}</td>
+                            <td>{{rowData['MarkTemperature'] + ' ' + rowData['Unit']['Name']}}</td>
+                            <td>{{rowData['Timespan']}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+            <!-- Rules Ordinal Buttons -->
+            <div class="ui-grid-col-1">
+                <div class="ui-grid-row">
+                    <button type="button" pButton icon="fa fa-angle-up" (click)="moveUp($event)"></button>
+                </div>
+                <div class="ui-grid-row">
+                    <button type="button" pButton icon="fa fa-angle-down" (click)="moveDown($event)"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Picker Row -->
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6 ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-2">
+                        <label>Background Color </label>
+                    </div>
+                    <div class="ui-grid-col-10">
+                        <p-colorPicker [(ngModel)]="checkItem.BGColor" (onChange)=onDirtify()></p-colorPicker>
+                        <!-- <p style="margin-top:.5em">Selected Color: <span [ngStyle]="{'color':color2}">{{color2}}</span></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

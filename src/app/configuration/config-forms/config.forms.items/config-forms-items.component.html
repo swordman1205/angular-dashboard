@@ -1,0 +1,204 @@
+<p-overlayPanel #op [showCloseIcon]="true" [dismissable]="false">
+    <p-panel>
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">{{selSchedItem?.name}}</span>
+                <!-- <i class="fa fa-trash-o" (click)="deleteSchedFormItm($event)" pTooltip="Delete" style="float:right;margin:5px 0 0 5px" width="22"
+                    height='22'></i> -->
+            </div>
+        </p-header>
+        <b>Check Item: {{selSchedItem?.name}}</b><br /> Schedule: {{selSchedItem?.schedule | date:'medium' }}
+        <p-footer>
+            <!-- <button pButton type="button" icon="pi pi-plus" label="New" class="ui-button-info" style="margin-right: .25em"></button>
+            <button pButton type="button" icon="pi pi-search" label="View" class="ui-button-success"></button> -->
+        </p-footer>
+    </p-panel>
+</p-overlayPanel>
+
+
+<div class='p-grid-12' style="padding: 10px 0 10px 0" *ngIf='form'>
+
+    <!-- Scheduled Row -->
+    <div class="p-grid" style="padding: 15px 15px 15px 20px">
+        <p-checkbox binary="true" [(ngModel)]='form.Scheduled'></p-checkbox>
+        <!-- (onChange)='formScheduledChanged($event, rowData)'-->
+        <label style="display:inline; margin:5px 0 5px 10px">Scheduled</label>
+    </div>
+
+    <!-- CheckItems Data Row -->
+    <div class="p-grid" style="width: 100%; height: 100%;">
+
+        <!-- Location Check Items -->
+        <div class="p-col-3 list-container" *ngIf='!form.Scheduled'>
+            <p-listbox [options]="checkItemElmnts" [(ngModel)]="currCheckItem" filter="true">
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix" pDraggable="chkItems" (onDragStart)="nonSchedItemDragStart($event, item.value)"
+                        (onDragEnd)="nonSchedItemDragEnd($event)">
+                        <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 5px" width="22"
+                            height='22'>
+                        <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22"> -->
+                        <span style="text-align:left;padding:5px 5px 0 5px">{{item.value.Name}}</span>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+
+        <!-- Non-Scheduled Form Check Items -->
+        <div class="p-col-9 list-container-full" *ngIf='!form.Scheduled' pDroppable="chkItems" (onDrop)="nonSchedDropItem($event.target.value)">
+            <p-listbox [options]="formNonSchedElmnts" [(ngModel)]="currChcFrmItem" width="100%">
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 5px" width="22"
+                            height='22'>
+                        <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22"> -->
+                        <span style="text-align:left;padding:5px 25px 0 5px">{{item.label}}</span>
+                        <i class="fas fa-trash-alt" style="align-content:right;padding:5px 15px 0 15px" (click)="deleteFormItm($event, item.value)"
+                            pTooltip="Delete"></i>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+
+        <!-- Scheduled Form Check Items -->
+        <div class="p-col-9 scheduler-container" *ngIf='form.Scheduled'>
+            <dx-scheduler id="scheduler" [dataSource]="schedules" [height]='750' width='100%' [views]='["agenda", "day", "week", "workWeek", "month"]'
+                currentView="month" [firstDayOfWeek]="0" [startDayHour]="0" [endDayHour]="24" [showAllDayPanel]="false"
+                [currentDate]="currentDate" [crossScrollingEnabled]="crossScrollingEnabled" [cellDuration]="60"
+                (onAppointmentDblClick)="overrideDefaultPopup($event)" (onAppointmentClick)="overrideDefaultPopup($event)"
+                (onCellClick)="cellClicked($event)">
+                <!--  appointmentTemplate="appointment-template"  appointmentTooltipTemplate="tooltip-template" (onAppointmentFormCreated)="onAppointmentFormCreated($event)" -->
+                <dxo-editing [allowAdding]="true"></dxo-editing>
+
+                <dxi-resource fieldExpr="chkItemID" [useColorAsDefault]="true" [dataSource]="resources">
+                </dxi-resource>
+
+
+                <!-- Appointment Template -->
+                <!-- <div *dxTemplate="let schedule of 'appointment-template'">
+                        <div class='schedule-preview'>
+                            <div>{{getCheckItmByID(schedule.chkItemID).text}}</div>
+                            <div class='dropdown-appointment-dates'>
+                                {{(schedule.startDate | date:'shortTime') + ' - ' + (schedule.endDate | date:'shortTime')}}
+                            </div>
+                        </div>
+                    </div> -->
+
+                <!-- Appointment Tooltip Template -->
+                <!-- <div *dxTemplate="let schedule of 'tooltip-template'">
+                        <div class='resource-tooltip'>
+                            <img [src]="getCheckItmByID(schedule.chkItemID).image" />
+                            <div class='resource-info'>
+                                <div class='resource-title'>
+                                    {{getCheckItmByID(schedule.chkItemID).text + ' (' + getCheckItmByID(schedule.chkItemID).year + ')'}}
+                                </div>
+                                <div>
+                                    {{'Director: ' + getCheckItmByID(schedule.chkItemID).director}}
+                                </div>
+                                <div>
+                                    {{'Duration: ' + getCheckItmByID(schedule.chkItemID).duration + ' minutes'}}
+                                </div>
+                            </div><br />
+                            <dx-button text='Edit details' (onClick)='editDetails(schedule)' type="default">
+                            </dx-button>
+                        </div>
+                    </div> -->
+
+            </dx-scheduler>
+
+
+
+            <!-- <dx-context-menu #appointmentMenu [dataSource]="allContextMenuItems" target=".dx-scheduler-appointment" (onItemClick)="onContextMenuItemClick($event)"
+                    [width]="200">
+                    <div *dxTemplate="let e of 'item'">
+                        <div *ngIf="e.color">
+                            <div class="item-badge" [ngStyle]="{ backgroundColor: e.color}"></div>
+                        </div>
+                        <div class="item-text">{{e.text}}</div>
+                    </div>
+                </dx-context-menu>
+
+                <dx-context-menu #cellMenu [dataSource]="cellContextMenuItems" target=".dx-scheduler-date-table-cell" (onItemClick)="onContextMenuItemClick($event)"
+                    [width]="200">
+                </dx-context-menu> -->
+
+
+            <dx-popup class="popup" [width]="515" [height]="655" titleTemplate="title" [(visible)]="isPopupVisible"
+                [shading]="true" shadingColor="rgba(0, 0, 0, 0.2)">
+                <div *dxTemplate="let data of 'title'" style="padding: 7px 15px 7px 5px; background: rgb(211, 208, 208)">
+                    <div class="dx-field">
+                        <div class="dx-field-label" style='font-size: 18px; font-weight: bold; width: auto'>Scheduled
+                            Check
+                            Items
+                        </div>
+                        <div class="dx-field-value" style="align-content: right; width: 125px; margin-top: 3px">
+                            <dx-button icon='fas fa-times-circle' style="margin:0 5px 0 5px" (onClick)='isPopupVisible=false'
+                                type="default">
+                            </dx-button>
+                            <dx-button icon='fas fa-sync-alt' style="margin:0 5px 0 5px" (onClick)='refreshAppotPopup($event)'
+                                type="default">
+                            </dx-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div *dxTemplate="let data of 'content'">
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">From: </div>
+                        <div class="dx-field-value">
+                            <dx-date-box [(value)]="currAppoint.startDate" type="datetime" applyValueMode="useButtons"
+                                (onValueChanged)=appontStartChanged($event)>
+                            </dx-date-box>
+                        </div>
+                    </div>
+                    <div class="dx-field" style='margin-bottom: 10px'>
+                        <div class="dx-field-label">To: </div>
+                        <div class="dx-field-value">
+                            <dx-date-box [disabled]='true' [(value)]="currAppoint.endDate" type="datetime">
+                            </dx-date-box>
+                        </div>
+                    </div>
+                    <dx-form [colCount]="2" style="margin:25px 0">
+
+                        <dxi-item itemType="group" caption="CheckItem Resources">
+                            <div #lstResources (dragover)="allowDrop($event)">
+                                <!-- (onDropSuccess)="transferDataSuccess($event)" -->
+                                <dx-list id='lstResources' [dataSource]="resources" [height]="400" style="margin:0 10px; border: 3px"
+                                    [showSelectionControls]='true' [activeStateEnabled]='true' (onDisposing)='lstResDisposing($event)'>
+                                    <div *dxTemplate="let data of 'item'" draggable="true" (dragstart)="onResourceDragStart($event, data)"
+                                        dnd-droppable>
+                                        <div>
+                                            <i class="fa fa-home" style="margin:0 5px"></i>
+                                            {{data.text}}
+                                        </div> <!-- DatCheckItem Object -->
+                                    </div>
+                                </dx-list>
+                            </div>
+                        </dxi-item>
+
+                        <dxi-item itemType="group" caption="Scheduled CheckItems">
+                            <div #lstScheds (dragover)="allowDrop($event)">
+                                <!-- (onDropSuccess)="transferDataSuccess($event)" -->
+                                <dx-list id='lstScheds' [dataSource]="lstHourScheds" [height]="400" style="margin:0 10px"
+                                    [allowItemReordering]='true' [showSelectionControls]='true' [activeStateEnabled]='true'
+                                    (onItemReordered)='ordinalChanged($event)' (onDisposing)='lstSchdDisposing($event)'>
+                                    <div *dxTemplate="let data of 'item'" draggable="true" (dragstart)="onChkItemDragStart($event, data)"
+                                        dnd-droppable>
+                                        <div>
+                                            <i class="fa fa-home" style="margin:0 5px"></i>
+                                            {{data.text}}
+                                        </div> <!-- DatFormCheckItem Object -->
+                                    </div>
+                                </dx-list>
+                            </div>
+                        </dxi-item>
+
+                    </dx-form>
+                </div>
+
+            </dx-popup>
+        </div>
+
+    </div>
+
+</div>

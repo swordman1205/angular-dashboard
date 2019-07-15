@@ -1,0 +1,32 @@
+<div class="fl-header">
+    <H3 translate class="fl-widget-header">WIDGETS.ASSET_MEASURES_CHART.TITLE</H3>
+
+    <div id="timeBar" class="custom-time-padding">
+        <!--LAST X-->
+        <p-selectButton [options]="lastXTypes" [(ngModel)]="selectedXType"
+                        (onChange)="onTimeChange()"></p-selectButton>
+        <!-- CUSTOM -->
+        <span *ngIf="selectedXType <= 0">
+            <p-calendar [(ngModel)]="rangeDates" selectionMode="range"
+                        readonlyInput="true" [showTime]="true" hourFormat="12"
+                        [showIcon]="true" showButtonBar="true"
+                        (onClose)="onCustomTimeChange()"></p-calendar>
+            </span>
+    </div>
+
+    <p-messages [(value)]="errorMessage"></p-messages>
+
+    <button (click)="getData()" translate class="fl-refresh-btn">
+        <i class="far fa-sync-alt"></i>
+    </button>
+</div>
+
+<p-blockUI [target]="amChartContainer" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute;top:48%;left:48%"></i>
+</p-blockUI>
+
+<app-blocker #amChartContainer>
+    <div class="chart-container">
+        <div #amChart style="height: 100%; width: 100%;"></div>
+    </div>
+</app-blocker>

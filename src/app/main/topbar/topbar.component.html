@@ -1,0 +1,128 @@
+<div class="topbar clearfix">
+    <div class="topbar-left fl-logo">
+        <!-- Close/Open left Navigation -->
+        <a id="menu-button" href="#" (click)="main.onMenuButtonClick($event)">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div class="logo"></div>
+    </div>
+
+    <div class="topbar-right">
+
+        <ul class="topbar-items animated fadeInDown"
+            [ngClass]="{'topbar-items-visible': main.topbarMenuActive}">
+
+            <!-- Value History (Only for AssetMeasure) -->
+            <!-- TODO: Need to implement valueHistory for assetMeasure view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'assetMeasure'">
+                <p-button icon="fa fa-file" (onClick)="onIconClicked('valueHistory')" pTooltip="Value History" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Status History (Only for AssetMeasure) -->
+            <!-- TODO: Need to implement StatusHistory for assetMeasure view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'assetMeasure'">
+                <p-button icon="fa fa-file" (onClick)="onIconClicked('statusHistory')" pTooltip="Status History" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Measures (Only for Asset) -->
+            <!-- TODO: Need to implement Measures for asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'asset'">
+                <p-button icon="fa fa-file" (onClick)="onIconClicked('measures')" pTooltip="Measures" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- IntelliTasks (Only for Asset) -->
+            <!-- TODO: Need to implement IntelliTasks for asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'asset' || itemType === 'assetMeasure'">
+                <p-button icon="fa fa-file" (onClick)="onIconClicked('intelliTasks')" pTooltip="IntelliTasks" tooltipPosition="bottom"></p-button>
+            </li>
+            <li #settings [ngClass]="{'active-top-menu':main.activeTopbarItem === settings}">
+                <a href="#" (click)="main.onTopbarItemClick($event,settings)">
+                    <i class="topbar-icon material-icons">settings</i>
+                    <span class="topbar-item-name">Settings</span>
+                </a>
+                <ul class="ultima-menu animated fadeInDown">
+                    <li role="menuitem" (click)="onLogout()">
+                        <a style="cursor: pointer">
+                            <i class="material-icons">power_settings_new</i>
+                            <span translate>TOPBAR.LOGOUT</span>
+                        </a>
+                    </li>
+                    <li role="menuitem" (click)="toggleSettingsDialog(true)">
+                        <a style="cursor: pointer">
+                            <i class="material-icons">settings</i>
+                            <span translate>TOPBAR.SETTINGS</span>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a style="cursor: pointer">
+                            <i class="material-icons">info</i>
+                            <span>{{ 'TOPBAR.APP_VERSION' | translate: {version: version} }}</span>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a style="cursor: pointer">
+                            <i class="fa fa-database" aria-hidden="true"></i>
+                            <span>{{ 'TOPBAR.DB_VERSION' | translate: {version: dbVersion} }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Documents (Only for Location && Asset) -->
+            <!-- TODO: Need to implement Documents for location & asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location' || itemType === 'asset'">
+                <p-button icon="fa fa-file" (onClick)="onIconClicked('documents')" pTooltip="Documents" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- IntelliMap (Only for Location && Asset) -->
+            <!-- TODO: Need to implement IntelliMaps for asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location' || itemType === 'asset'">
+                <p-button icon="fa fa-map" (onClick)="onIconClicked('intelliMaps')" pTooltip="IntelliMaps" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Reports (Only for Location) -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location'">
+                <p-button icon="fa fa-info" (onClick)="onIconClicked('reports')" pTooltip="Reports" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Activities (Only for Location & Admin rights) -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location' && isAdmin">
+                <p-button icon="fa fa-file-edit" (onClick)="onIconClicked('activities')" pTooltip="Activities" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Tickets (Only for Location & Asset) -->
+            <!-- TODO: Need to implement tickets for asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location' || itemType === 'asset'">
+                <p-button icon="fa fa-folder-open" (onClick)="onIconClicked('tickets')" pTooltip="Tickets" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Alarms (Only for Location & Asset) -->
+            <!-- TODO: Need to implement alarms for asset view -->
+            <li class="link-item hidden-xs" *ngIf="itemType === 'location' || itemType === 'asset'">
+                <p-button icon="fa fa-bell" (onClick)="onIconClicked('alarms')" pTooltip="Alarms" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <!-- Dashboard (For Location Asset & AssetMeasure) -->
+            <li class="link-item hidden-xs">
+                <p-button icon="fa fa-tachometer" (onClick)="onIconClicked('widgets')" pTooltip="Dashboard" tooltipPosition="bottom"></p-button>
+            </li>
+
+            <li class="hidden-xs">
+                <app-spotlight></app-spotlight>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- SETTINGS DIALOG -->
+<p-dialog header="{{'SETTINGS.TITLE' | translate}}"
+          [(visible)]="settingsDialogVisible"
+          [modal]="true"
+          [closeOnEscape]="false"
+          (onShow)="onSettingsShow()"
+          [draggable]="true"
+          [contentStyle]="{'max-height': '500px', 'width': '800px'}">
+    <app-general-settings (notifyShouldClose)="toggleSettingsDialog(false)">
+    </app-general-settings>
+</p-dialog>

@@ -1,0 +1,50 @@
+.asm-types-container {
+  display: flex;
+  height: calc(100% - 60px);
+}
+
+.list-container {
+  overflow: auto;
+  height: 100%;
+  width: 235px;
+  background: #FFFFFF;
+  border-radius: 6px;
+}
+
+p-listbox {
+  display: flex;
+  // height:calc(100% - 24px);
+  // width: calc(100% - 24px);
+  margin: 7px;
+  padding: 7px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.content {
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-left: 10px;
+  border: 1px solid #505050;
+  border-radius: 6px;
+}
+
+.buttons-container {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
+
+  & button {
+    margin-right: 10px;
+  }
+}
+
+.ui-inputgroup {
+  width: 100%;
+}

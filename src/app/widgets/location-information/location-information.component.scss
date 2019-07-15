@@ -1,0 +1,60 @@
+@import '../../../assets/sass/variables';
+
+:host {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+
+  app-blocker {
+    flex: 1;
+    overflow: auto;
+  }
+}
+
+.row-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid $widgetTableHeaderBgColor;
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.item {
+  color: #222425;
+  font-size: 12px;
+}
+
+.key {
+  flex-basis: 180px;
+}
+
+p-accordion {
+  /deep/ {
+    .ui-accordion {
+      .ui-accordion-header {
+        background-color: $widgetTableHeaderBgColor !important;
+        color: $widgetTableHeaderTextColor !important;
+        margin-bottom: 3px;
+        > a {
+          padding: 0.4em 1em;
+          color: $widgetTableHeaderTextColor;
+          .ui-accordion-header-text {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+          }
+          .ui-accordion-toggle-icon {
+            color: $widgetTableHeaderTextColor;
+          }
+        }
+      }
+      .ui-accordion-content {
+        padding: 0 1em;
+      }
+    }
+  }
+}

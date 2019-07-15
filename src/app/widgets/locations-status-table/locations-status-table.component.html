@@ -1,0 +1,46 @@
+<div class="fl-header">
+    <H3 translate class="fl-widget-header">WIDGETS.LOCATION_STATUS.TITLE</H3>
+
+    <button (click)="getData()" translate class="fl-refresh-btn">
+        <i class="far fa-sync-alt"></i>
+    </button>
+</div>
+
+<p-table #locStatusTbl
+         [value]="data"
+         [scrollable]="true"
+         scrollHeight="100%"
+         [loading]="loading"
+         [responsive]="true"
+         [globalFilterFields]="['LocationName','AssetName','AssetMeasureName', 'StatusViewParsed', 'StatusTimestampParsed']">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'WIDGETS.LOCATION_STATUS.COLUMNS.LOCATION' | translate}}</th>
+            <th>{{'WIDGETS.LOCATION_STATUS.COLUMNS.ASSET' | translate}}</th>
+            <th>{{'WIDGETS.LOCATION_STATUS.COLUMNS.MEASURE' | translate}}</th>
+            <th>{{'WIDGETS.LOCATION_STATUS.COLUMNS.STATUS' | translate}}</th>
+            <th class="time-col">{{'WIDGETS.LOCATION_STATUS.COLUMNS.TIME' | translate}}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data>
+        <tr>
+            <td class="user-col" title="{{data.LocationName}}">
+                <a [routerLink]="[ '/location/' + data.LocationID + '/locationDashboard/widgets']">{{data.LocationName}}</a>
+            </td>
+            <td title="{{data.AssetName}}">
+                <a [routerLink]="[ '/asset/' + data.AssetID + '/assetDashboard/widgets']">{{data.AssetName}}</a>
+            </td>
+            <td title="{{data.AssetMeasureName}}">
+                <a [routerLink]="[ '/assetMeasure/' + data.AssetMeasureID + '/assetMeasureDashboard/widgets']">{{data.AssetMeasureName}}</a>
+            </td>
+            <td title="{{data.StatusViewParsed}}">{{data.StatusViewParsed}}
+            </td>
+            <td class="time-col" title="{{data.StatusTimestampParsed}}">
+                <i class="far fa-clock" aria-hidden="true"></i> {{data.StatusTimestampParsed}}
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>

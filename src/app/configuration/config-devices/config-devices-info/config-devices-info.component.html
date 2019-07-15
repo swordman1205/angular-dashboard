@@ -1,0 +1,599 @@
+<p-dialog *ngIf='device' header="Firmware List" [(visible)]="flgDisplayFrmwDlg" [modal]="true" [responsive]="true"
+    [width]="350" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <p-listbox [options]="lstOpts" [(ngModel)]="selDialgItm">
+    </p-listbox>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="onDialogOK($event)" label="OK"></button>
+        <button type="button" pButton icon="pi pi-close" (click)="flgDisplayFrmwDlg=false" label="Cancel"
+            class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog *ngIf='device' [(visible)]="flgDisplayBtryDlg" [modal]="true" [responsive]="true" [width]="550"
+    [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+    <p-header style="justify-content: space-between">
+        <label>Battery History</label>
+        <i class='fas fa-sync-alt' (click)='getBatteryLogs()'></i>
+    </p-header>
+    <div class="p-grid" style="margin: 10px 10px 10px 10px; width: 100%; background: snow">
+        <dx-chart palette="violet" title="" [dataSource]="batteryLogs" style="width: 500; padding: 10px 10px;">
+            <dxo-margin [bottom]="10"></dxo-margin>
+            <dxo-common-axis-settings [width]='4' color='#FF6262' wholeRange='[selStartDate, selEndDate]'
+                visualRange='[selStartDate, selEndDate]'>
+                <dxo-grid [visible]="true" type='continuous'></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-argument-axis argumentType='datetime' tickInterval="day" [allowDecimals]="false" valueType='datetime'
+                [visible]='true'>
+                <dxo-tick [visible]="true"></dxo-tick>
+                <dxo-label [customizeText]="getLogTimeStamp">
+                </dxo-label>
+            </dxo-argument-axis>
+            <dxi-value-axis [tickInterval]='0.2' valueType='numeric' [visible]='true'>
+                <dxo-tick [visible]="true"></dxo-tick>
+                <dxo-label [customizeText]="getVoltage">
+                </dxo-label>
+            </dxi-value-axis>
+            <dxi-series type="spline" argumentField="Timestamp" valueField="BatteryVoltage" name="Battery Voltage">
+            </dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip [enabled]="true" [customizeTooltip]="batteryLogTooltip"></dxo-tooltip>
+        </dx-chart>
+    </div>
+</p-dialog>
+
+
+<p-dialog *ngIf='device' header='Model Switches' [(visible)]="flgDisplayMdlSwitDlg" [modal]="true" [responsive]="true"
+    [width]="410" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+    <div class='p-grid'>
+        <div class="p-col-3">
+            <label>Value: </label>
+        </div>
+        <div class="p-col">
+            <label>{{device.ConfigModelNumberFlags}}</label>
+        </div>
+    </div>
+    <div style="height: 3px; width: 100%; background: gray"></div>
+    <div class='p-grid' style="width:350px; margin-bottom:10px; margin-top: 15px">
+        <div class="p-col-12">
+            <p-checkbox name="group1" value="device.ConfigModelNumberFlags & 0x00000001) !== 0"
+                label="{{'CONFIG_DEVICES.MODEL_NUMBER_FLAGS.CHECK_TRIG_IO_1' | translate}}"
+                (onChange)='toggleModelFlagsByte(1)' inputId="trigIO1"></p-checkbox>
+        </div>
+        <div class="p-col-12">
+            <p-checkbox name="group1" value="device.ConfigModelNumberFlags & 0x00000002) !== 0"
+                label="{{'CONFIG_DEVICES.MODEL_NUMBER_FLAGS.CHECK_TRIG_IO_3' | translate}}"
+                (onChange)='toggleModelFlagsByte(2)' inputId="trigIO3"></p-checkbox>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog *ngIf='device' header='Sugnal Logs History' [(visible)]="flgDisplaySignLDlg" [modal]="true"
+    [responsive]="true" [width]="550" [minWidth]="300" [minY]="70" [baseZIndex]="10000">
+    <div class="p-grid" style="margin: 10px 10px 10px 10px; width: 100%; background: snow">
+        <dx-chart palette="violet" title="" [dataSource]="signalLogInfos" style="width: 500; padding: 10px 10px;">
+            <dxo-margin [bottom]="10"></dxo-margin>
+            <dxo-common-axis-settings [width]='4' color='#FF6262' wholeRange='[selStartDate, selEndDate]'
+                visualRange='[selStartDate, selEndDate]'>
+                <dxo-grid [visible]="true" type='continuous'></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-argument-axis argumentType='datetime' tickInterval="day" [allowDecimals]="false" valueType='datetime'
+                [visible]='true'>
+                <dxo-tick [visible]="true"></dxo-tick>
+                <dxo-label [customizeText]="getSignalLogTimeStamp">
+                </dxo-label>
+            </dxo-argument-axis>
+            <dxi-value-axis [tickInterval]='0.25' valueType='numeric' [visible]='true'>
+                <dxo-tick [visible]="true"></dxo-tick>
+                <dxo-label [customizeText]="getSignalLogVal">
+                </dxo-label>
+            </dxi-value-axis>
+            <dxo-common-series-settings argumentField="timestap" type="spline"> </dxo-common-series-settings>
+            <dxi-series valueField="txSignal" name="TxSignal Log"></dxi-series>
+            <dxi-series valueField="rxSignal" name="RxSignal Log"></dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip [enabled]="true" [customizeTooltip]="signalLogTooltip"></dxo-tooltip>
+        </dx-chart>
+    </div>
+</p-dialog>
+
+<div class='p-grid container' *ngIf='device'>
+
+    <!-- Upper Left Cube -->
+    <div class="p-col-6 cube">
+
+        <!-- <div class="form-group"> -->
+        <p-card header="Device Info" subheader="" [style]="{background: 'white'}" styleClass="ui-card-shadow">
+
+            <!-- Device Group -->
+            <div class="p-grid item" *ngIf='device?.RowState === rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="deviceGroup">Group *</label>
+                </div>
+                <div class="p-col-7">
+                    <p-dropdown id="deviceGroup" [options]="deviceGroupOpts" [(ngModel)]="selDevcGroup"
+                        (onChange)='deviceGroupChnaged($event)'>
+                        <ng-template let-item pTemplate="selectedItem">
+                            <!-- <img src="assets/showcase/images/demo/car/{{item.label}}.png" style="width:16px;vertical-align:middle" /> -->
+                            <span style="vertical-align:middle">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                                <!-- <img src="assets/showcase/images/demo/car/{{car.label}}.png" style="width:24px;position:absolute;top:1px;left:5px" /> -->
+                                <div style="font-size:14px;float:left;margin-top:4px">{{item.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <!-- Device Types -->
+            <div class="p-grid item" *ngIf='device?.RowState === rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="deviceTypes">Device Types *</label>
+                </div>
+                <div class="p-col-7">
+                    <p-dropdown id="deviceTypes" (onChange)='deviceTypeChanged($event)' [options]="deviceTypeOpts"
+                        [filter]="true" [(ngModel)]='device.DeviceTypeID'>
+                        <ng-template let-item pTemplate="selectedItem">
+                            <!-- <img src="assets/showcase/images/demo/car/{{item.label}}.png" style="width:16px;vertical-align:middle" /> -->
+                            <span style="vertical-align:middle">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                                <!-- <img src="assets/showcase/images/demo/car/{{car.label}}.png" style="width:24px;position:absolute;top:1px;left:5px" /> -->
+                                <div style="font-size:14px;float:left;margin-top:4px">{{item.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <!-- Device ID (New Device) -->
+            <div class="p-grid item" *ngIf='device?.RowState === rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="deviceID1">Device ID *</label>
+                </div>
+                <div class="p-col-7">
+                    <p-inputMask #dvcIDMask id="deviceID1" [mask]="geNewDeviceMask()" [placeholder]="geNewDeviceMask()"
+                        slotChar="_" (onComplete)='devicePhysicalIDChanged(dvcIDMask.value)'></p-inputMask>
+                </div>
+            </div>
+
+            <!-- Device ID -->
+            <div class="p-grid item" *ngIf='device?.RowState !== rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="deviceID2">Device ID</label>
+                </div>
+                <div class="p-col-7">
+                    <label id="deviceID2">{{device?.PhysicalID}}</label>
+                </div>
+            </div>
+
+            <!-- IP Address -->
+            <div class="p-grid item" *ngIf='device?.RowState !== rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="ipAddres">IP Address</label>
+                </div>
+                <div class="p-col-5">
+                    <label id="ipAddres">{{device?.IPAddress}}</label>
+                </div>
+                <div class="p-col-2" *ngIf='flgShowBrowseBtn'>
+                    <button type="button" pButton (click)='browse()' text='Browse' pTooltip='Browse To Device' visible='device.DeviceTypeID === DeviceTypes.INTELLIGATE
+                        && device.IPAddress && device.IPAddress.length > 0'></button>
+                </div>
+            </div>
+
+            <!-- Last Update -->
+            <div class="p-grid item" *ngIf='device?.RowState !== rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="lastUpdt">Last Update</label>
+                </div>
+                <div class="p-col-7">
+                    <label id="lastUpdt">{{device?.LastUpdate | ecsDatetime}}</label>
+                </div>
+            </div>
+
+            <!-- Last Data -->
+            <div class="p-grid item" *ngIf='device?.RowState !== rowStates.ADDED'>
+                <div class="p-col-5">
+                    <label for="lastData">Last Data</label>
+                </div>
+                <div class="p-col-7">
+                    <label id="lastData">{{device?.LastData | ecsDatetime}}</label>
+                </div>
+            </div>
+
+            <!-- Battery Status -->
+            <div class="p-grid item" *ngIf='flgShowBattery'>
+                <div class="p-col-5">
+                    <label for="batStat">Battery Status</label>
+                </div>
+                <div class="p-col-4">
+                    <label id="batStat">{{getBatStatus()}}</label>
+                </div>
+                <div class="p-col-3">
+                    <button type="button" pButton icon="fa fa-battery-full" (click)='showBatteryHistory($event)'
+                        pTooltip='Show Battery History'></button>
+                </div>
+            </div>
+
+            <!-- Serial Number -->
+            <div class="p-grid item">
+                <div class="p-col-5">
+                    <label for="serialNum">Serial Number</label>
+                </div>
+                <div class="p-col-7">
+                    <input #control="ngModel" id="serialNum" type="text" pInputText [(ngModel)]="device.SerialNumber"
+                        pKeyFilter="alphanum" (change)='onDirtify()'>
+
+                    <!-- <input #control="ngModel" required id="serialNum" type="text" pInputText
+                        [(ngModel)]="device.SerialNumber" pKeyFilter="alphanum" (change)='onDirtify()'>
+
+                    <div *ngIf="control.invalid" style="color: red">Required</div> -->
+                    <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+                </div>
+            </div>
+
+            <!-- Pairing Status -->
+            <div class="p-grid item" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLIGATE'>
+                <div class="p-col-5">
+                    <label for="pairStat">Pairing Status</label>
+                </div>
+                <div class="p-col-7">
+                    <label id="pairStat">{{getPairStatus()}}</label>
+                </div>
+            </div>
+
+            <!-- Secure Pairing For -->
+            <div class="p-grid item" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLIGATE'>
+                <div class="p-col-5">
+                    <label for="secPair">Secure Pairing For</label>
+                </div>
+                <div class="p-col-4">
+                    <p-dropdown id="secPair" [options]="secPairOpts" [(ngModel)]='device.SecPair'
+                        (onChange)='onDirtify()'></p-dropdown>
+                </div>
+                <div class="p-col-3">
+                    <button type="button" pButton icon="ui-icon-update" (click)='resetSecPairing($event)'
+                        pTooltip='Secure Pairing For'></button>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="p-grid item">
+                <div class="p-col-5">
+                    <label for="comments">Comments</label>
+                </div>
+                <div class="p-col-7">
+                    <textarea pInputTextarea id="comments" [(ngModel)]='device.Comments'
+                        (onChange)='onDirtify()'></textarea>
+                </div>
+            </div>
+
+            <!-- </div> -->
+        </p-card>
+    </div>
+
+    <!-- Upper Right Cube -->
+    <!-- <div class="p-col-6">
+
+        <div class="form-group">
+        </div>
+    </div> -->
+
+    <!-- Lower Left Cube -->
+    <div class="p-col-6 cube">
+
+        <!-- Visibale for IG/IS -->
+        <p-card header="Device Connectivity" subheader="" *ngIf='flgShowIGGroup' [style]="{background: 'white'}"
+            styleClass="ui-card-shadow">
+            <div class="p-grid-12">
+
+                <!-- Disconnect Delay -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="discntDelay">Disconnect Delay</label>
+                    </div>
+                    <div class="p-col-7">
+                        <p-spinner id="discntDelay" [step]=1 [min]=0 [(ngModel)]='device.DisconnectAlarmDelay'
+                            (onChange)='onDirtify()'></p-spinner>
+                    </div>
+                </div>
+
+                <div class="p-grid-12" *ngIf='device?.RowState !== rowStates.ADDED'>
+
+                    <!-- Model Switches -->
+                    <div class="p-grid item">
+                        <div class="p-col-5">
+                            <label for="mdlSwitch">Model Switches</label>
+                        </div>
+                        <div class="p-col-4">
+                            <label id="mdlSwitch">{{device ? (device.ModelNumberFlags > 0 ? device.ModelNumberFlags : 'Disabled')
+                                : 'Disabled' }}</label>
+                        </div>
+                        <div class="p-col-3">
+                            <button pButton type="button" icon="ui-icon-refresh" pTooltip="Edit"
+                                (click)='showModelNumberFlags()'></button>
+                        </div>
+                    </div>
+
+                    <!-- Tx Interval -->
+                    <div class="p-grid item">
+                        <div class="p-col-5">
+                            <label for="txIntrvl">Tx Interval</label>
+                        </div>
+                        <div class="p-col-3">
+                            <label id="txIntrvl">{{getTxInterval()}}</label>
+                        </div>
+                        <div class="p-col-4">
+                            <p-spinner [step]=1 [min]=0 [(ngModel)]='device.ConfigTxPeriod' (onChange)='onDirtify()'>
+                            </p-spinner>
+                        </div>
+                    </div>
+
+                    <!-- RF Channel -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="rfChannel">RF Channel/Pan ID</label>
+                        </div>
+                        <div class="p-col-7">
+                            <label id="rfChannel">{{getRfChannel()}}</label>
+                        </div>
+                    </div>
+
+                    <!-- Enable Relay -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="relay">Enable Relay</label>
+                        </div>
+                        <div class="p-col-3">
+                            <label>{{device?.RelayStatus ? "Enabled" : "Disabled"}}</label>
+
+                        </div>
+                        <div class="p-col-4">
+                            <p-checkbox binary="true" name="relay"></p-checkbox>
+                        </div>
+                    </div>
+
+                    <!-- Allow New Assoc. -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="relay">Allow New Assoc.</label>
+                        </div>
+                        <div class="p-col-3">
+                            <label>{{device ? (device.AllowNewISAssociations ? "Enabled" : "Disabled") : ''}}</label>
+                        </div>
+                        <div class="p-col-4">
+                            <p-checkbox name="allowAsc" binary="true"></p-checkbox>
+                        </div>
+                    </div>
+
+                    <!-- Log Period -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID !== deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="logPriod">Log Period</label>
+                        </div>
+                        <div class="p-col-3">
+                            <label id="logPriod">{{getLogPeriod()}}</label>
+                        </div>
+                        <div class="p-col-4">
+                            <p-spinner [step]=1 [min]=0 [(ngModel)]='device.ConfigLogPeriod' (onChange)='onDirtify()'>
+                            </p-spinner>
+                        </div>
+                    </div>
+
+                    <!-- Violation Check Period -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID !== deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="logPriod">Violation Check Period</label>
+                        </div>
+                        <div class="p-col-3">
+                            <label id="logPriod">{{getViolPeriod()}}</label>
+                        </div>
+                        <div class="p-col-4">
+                            <p-spinner [step]=1 [min]=0 [(ngModel)]='device.ConfigViolationCheckPeriod'
+                                (onChange)='onDirtify()'></p-spinner>
+                        </div>
+                    </div>
+
+                    <!-- Rx/Tx Strength -->
+                    <div class="p-grid item" *ngIf='device?.DeviceTypeID !== deviceTypes.INTELLIGATE'>
+                        <div class="p-col-5">
+                            <label for="rxTxStrng">Rx/Tx Strength</label>
+                        </div>
+                        <div class="p-col-4">
+                            <label id="rxTxStrng">{{getRxTxStrng()}}</label>
+                        </div>
+                        <div class="p-col-3">
+                            <button pButton type="button" icon="ui-icon-refresh" pTooltip="Edit"
+                                (click)='showSignalHistory()'></button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </p-card>
+
+        <!-- Visibale for IntelliChecks -->
+        <p-card header="IntelliCheck" subheader="" *ngIf='device?.DeviceTypeID === deviceTypes.INTELLICHECK'
+            [style]="{background: 'white'}" styleClass="ui-card-shadow">
+            <div cclass="p-grid-12">
+
+                <!-- Temperature Unit -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="tempUnit">Temperature Units</label>
+                    </div>
+                    <div class="p-col-7">
+                        <p-dropdown id="tempUnit" [options]="tempUnitOpts" [(ngModel)]='device.TempMeasureUnit'
+                            (onChange)='onDirtify()'>
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <!-- Batch ID Required -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="batchID">Batch ID Required</label>
+                    </div>
+
+                    <div class="p-col-4">
+                        <p-checkbox binary="true" name="batchID" [(ngModel)]='device.BatchIDRequired'></p-checkbox>
+                    </div>
+                </div>
+
+                <!-- iButton Log Interval -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="iBtnLgIntrvl">iButton log Interval</label>
+                    </div>
+                    <div class="p-col-7">
+                        <p-spinner id="iBtnLgIntrvl" [step]=1 [min]=0 [(ngModel)]='device.IButtonLogInterval'
+                            (onChange)='onDirtify()'></p-spinner>
+                    </div>
+                </div>
+
+                <!-- iButton Alarm Delay -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="iBtnAlrmDely">iButton Alarm Delay</label>
+                    </div>
+                    <div class="p-col-7">
+                        <p-spinner id="iBtnAlrmDely" [step]=1 [min]=0 [(ngModel)]='device.IButtonAlarmDelay'
+                            (onChange)='onDirtify()'></p-spinner>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+
+        <!-- Visibale for OEM -->
+        <p-card header="OEM" subheader="" *ngIf='device?.DeviceTypeID === deviceTypes.OEM'
+            [style]="{background: 'white'}" styleClass="ui-card-shadow">
+            <div class="p-grid-12">
+
+                <!-- CommAddress -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="commAdrs">Comm Address</label>
+                    </div>
+                    <div class="p-col-7">
+                        <input id="commAdrs" type="text" pInputText [(ngModel)]='device.CommAddress'
+                            (change)='onDirtify()'>
+                    </div>
+                </div>
+
+                <!-- Batch ID Required -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="quryIntrvl">Batch ID Required</label>
+                    </div>
+                    <div class="p-col-7">
+                        <input id="quryIntrvl" type="text" pInputText [(ngModel)]='device.QueryInterval'
+                            (change)='onDirtify()'>
+                    </div>
+                </div>
+
+                <!-- Timeout Value -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="timeOut">Timeout Value</label>
+                    </div>
+                    <div class="p-col-7">
+                        <input id="timeOut" type="text" pInputText [(ngModel)]='device.TimeoutValue'
+                            (change)='onDirtify()'>
+                    </div>
+                </div>
+
+                <!-- Number of Retries -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="numRetries">Number of Retries</label>
+                    </div>
+                    <div class="p-col-7">
+                        <input id="numRetries" type="text" pInputText [(ngModel)]='device.NumberRetries'
+                            (change)='onDirtify()'>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+    </div>
+
+    <!-- Lower Right Cube -->
+    <div class="p-col-6 cube">
+        <p-card header="Hardware Definition" subheader="" *ngIf='flgShowIGGroup && device?.RowState !== rowStates.ADDED'
+            [style]="{background: 'white'}" styleClass="ui-card-shadow">
+
+            <div class="p-grid-12">
+                <!-- ECS Library Version -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="libVer">ECS Library Version</label>
+                    </div>
+                    <div class="p-col-7">
+                        <label id="libVer">{{getECSLibVer()}}</label>
+                    </div>
+                </div>
+
+                <!-- Firmware Information -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="frmwInfo">Firmware Information</label>
+                    </div>
+                    <div class="p-col-2">
+                        <label id="frmwInfo">{{getFirmWareInfo()}}</label>
+                    </div>
+                    <div class="p-col-3">
+                        <label for="hwVer">HW Version</label>
+                    </div>
+                    <div class="p-col-2">
+                        <label id="hwVer">{{getHWVer()}}</label>
+                    </div>
+                </div>
+
+                <!-- Last Firmware Update -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="lastFrmeUpdt">Last Firmware Update</label>
+                    </div>
+                    <div class="p-col-4">
+                        <label id="lastFrmeUpdt">{{getLastFWUpdate()}}</label>
+                    </div>
+                    <div class="p-col-3" *ngIf='flgShowFrmwUpdt'>
+                        <button pButton type="button" icon="ui-icon-refresh" pTooltip="Update"
+                            (click)='getInstalledFirmwares()'></button>
+                    </div>
+                </div>
+
+                <!-- Last Reboot -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="lstRebt">Last Reboot</label>
+                    </div>
+                    <div class="p-col-4">
+                        <label id="lstRebt">{{getLastReboot()}}</label>
+                    </div>
+                    <div class="p-col-3" *ngIf='flgCanReboot'>
+                        <button pButton type="button" icon="ui-icon-refresh" pTooltip="Reboot"
+                            (click)='rebootIntelliGate()'></button>
+                    </div>
+                </div>
+
+                <!-- Zone ID -->
+                <div class="p-grid item">
+                    <div class="p-col-5">
+                        <label for="zoneID">Zone ID</label>
+                    </div>
+                    <div class="p-col-7">
+                        <input id="zoneID" type="text" pInputText [(ngModel)]='device.ZoneID' (change)='onDirtify()'>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </div>
+
+</div>

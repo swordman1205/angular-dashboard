@@ -1,0 +1,7 @@
+<div>
+    <p-button icon="pi pi-plus" (click)="expandAll()"></p-button>
+    <p-button icon="pi pi-minus" (click)="collapseAll()"></p-button>
+    <p-tree [value]="data" selectionMode='single'
+            [(selection)]='selectedNode'
+            (onNodeSelect)="nodeSelect($event)"></p-tree>
+</div>

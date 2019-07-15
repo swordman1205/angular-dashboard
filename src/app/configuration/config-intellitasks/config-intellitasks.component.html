@@ -1,0 +1,83 @@
+<p-blockUI [target]="confgIntelTask" [blocked]="loading">
+  <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
+<app-blocker #confgIntelTask>
+  <div class="intelliTask-container">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 20px 20px 20px">
+
+      <div class="ui-grid-row">
+
+        <label [style]="{'margin-right':'10px'}">Name: </label>
+        <input type="text" pInputText size="30" [(ngModel)]="editTemplt.Name" [style]="{'margin-right':'10px'}">
+        <label>Start Temparture: </label>
+        <p-spinner [(ngModel)]="editTemplt.StartTemperature"></p-spinner>
+        <label>Mark Temparture: </label>
+        <p-spinner [(ngModel)]="editTemplt.MarkTemperature"></p-spinner>
+        <label>Unit</label>
+        <p-dropdown [(ngModel)]="selUnit" [options]="optUnits"></p-dropdown>
+        <label>Time Span: </label>
+        <p-spinner [(ngModel)]="editTemplt.Timespan"></p-spinner>
+        <p-button type="button" icon="fa fa-edit" (click)="updateTemplate()" pTooltip="Update"></p-button>
+        <p-button type="button" icon="fa fa-plus-square" (click)="addTemplate()" pTooltip="Add"></p-button>
+
+      </div>
+
+      <div class="ui-grid-row">
+        <p-table #tblCookCycle [columns]="cookinCycCols" [value]="EcsObjects" [scrollable]="true" selectionMode="single" dataKey="ID"
+          [style]="{'margin-bottom':'10px'}" [(selection)]="CurrECSObject" [globalFilterFields]="['Name']">
+          <ng-template pTemplate="caption">
+            <div></div> <!-- EMPTY DIV TO ALIGN HEADER -->
+            <!-- <div translate>WIDGETS.ACTIVITY.TITLE</div> -->
+            <div style="text-align: right">
+              <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+              <input type="text" pInputText size="30" placeholder="Filter" (input)="tblCookCycle.filterGlobal($event.target.value, 'contains')">
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th>
+                <!-- Delete Icon Column-->
+              </th>
+              <th *ngFor="let col of columns; let i=index" [pSortableColumn]="col.field" [class]="col.headerClass">
+                {{col.header}}
+                <p-sortIcon *ngIf="i > 0" [field]="col.field"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td>
+                <i class="fa fa-trash" (click)='deleteTemplate($event, rowData)' style="margin:4px 4px 0 0"></i>
+              </td>
+              <td *ngFor="let col of columns" [class]="col.columnClass" [title]="rowData[col.field]">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+    </div>
+  </div>
+</app-blocker>

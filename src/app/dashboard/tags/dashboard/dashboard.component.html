@@ -1,0 +1,15 @@
+<div id="fl-tags-tabs">
+
+    <div id="scrolledtabs" style='margin-right: 20px;'>
+        <dx-tabs #tagsDashboardTabs
+                 [dataSource]="tabs"
+                 [width]='tabsWidth'
+                 [scrollByContent]="true"
+                 [showNavButtons]="true"
+                 [selectedIndex]='tabIndex'
+                 keyExpr='key'
+                 (onItemClick)='onTabClicked($event)'></dx-tabs>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

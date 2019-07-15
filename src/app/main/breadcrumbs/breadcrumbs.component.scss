@@ -1,0 +1,48 @@
+:host /deep/ {
+  /*.ui-state-active {
+    padding: 2px;
+    font-size: 1.3em;
+  }
+
+  .ui-breadcrumb ul li:last-child {
+    width: 400px;
+  }
+
+  .ui-breadcrumb ul li .ui-menuitem-link {
+    padding: 4px;
+    background-color: #3FBA2A;
+    border-radius: 6px;
+    font-weight: bold;
+  }*/
+
+  .ui-breadcrumb {
+    padding: 0 23px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    li[role="menuitem"] {
+      margin: 0;
+      padding: 0 8px 0 4px;
+      .ui-menuitem-link span {
+        font-size: 12px;
+        &.ui-menuitem-icon {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .ui-breadcrumb-chevron {
+      color: white;
+      margin: 0 20px 0 -5px;
+      font-size: 16px;
+      &:before {
+        content: "arrow_drop_down";
+      }
+    }
+  }
+
+  .ui-menuitem-link {
+    background-color: unset;
+  }
+}

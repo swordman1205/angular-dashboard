@@ -1,0 +1,24 @@
+@import '../../../assets/sass/variables';
+
+:host {
+  /deep/ p-button button {
+    background-color: #E9E9E9;
+    color: $widgetTitleColor;
+    box-shadow: unset;
+    font-size: 25px;
+  }
+
+  .widget {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .layout {
+    display: grid;
+    height: calc(100% - 80px);
+    grid-gap: 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100%;
+    margin: 0 23px;
+  }
+}

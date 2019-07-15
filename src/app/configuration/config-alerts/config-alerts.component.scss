@@ -1,0 +1,23 @@
+.config-alert {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+}
+
+.config-alert {
+  display: flex; /* or inline-flex */
+  background-size: auto auto;
+  height: 50%; 
+  text-align: left;
+  width: 100%; 
+  min-height: 440px;
+  padding: 0px 10px;
+  margin: 10px auto 0 auto; 
+
+}
+
+.config-alert-panels {
+  width: 100%;
+  height: 100%;
+  margin-left: 20px;
+}

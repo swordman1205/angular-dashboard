@@ -1,0 +1,13 @@
+<div *ngFor="let item of data">
+
+  <app-temperature-gauge *ngIf="analogMeasures.includes(item.MeasureID)"
+                         [data] = "item"></app-temperature-gauge>
+
+  <app-digital-gauge *ngIf="digitalMeasures.includes(item.MeasureID)"
+                     [data] = "item"></app-digital-gauge>
+
+  <div *ngIf="!analogMeasures.includes(item.MeasureID) && !digitalMeasures.includes(item.MeasureID)">
+    {{item.AssetMeasureName}}: {{item.Value}} {{item.AssetMeasureUnits}}
+  </div>
+
+</div>

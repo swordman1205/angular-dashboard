@@ -1,0 +1,85 @@
+<p-blockUI [target]="confgDevices" [blocked]="loading">
+    <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onConfirm()" label="Yes"
+                    class="ui-button-success"></button>
+            </div>
+            <div class="ui-g-6">
+                <button type="button" pButton (click)="message.data.onReject()" label="No"
+                    class="ui-button-secondary"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<app-blocker #confgDevices>
+    <div class="devices-container">
+        <div class="tree-filter-container">
+            <div class="search-container">
+                <input autocomplete="off" class="ui-inputtext ui-corner-all search-text" type="text"
+                    placeholder="Search">
+                <i class="pi pi-search search-icon"></i>
+            </div>
+
+            <div class="tree-container">
+                <p-tree #devicesTree [value]='nodes' selectionMode='single' [(selection)]='selectedNode'
+                    (onNodeSelect)='nodeSelectHandler($event)'>
+                    <ng-template let-node pTemplate="picture">
+                        <!-- <img [src]="node.image"> -->
+                        <i class='node.icoName'></i>
+                    </ng-template>
+                    <ng-template let-node pTemplate="default">
+                        <label [ngStyle]='node.style'>{{node.label}}</label> <!-- "width:100%; color:brown"-->
+                    </ng-template>
+                </p-tree>
+            </div>
+        </div>
+
+        <div class="details">
+            <p-tabView autoLayout='true'>
+                <p-tabPanel header="{{ 'CONFIG_DEVICES.INFORMATION' | translate}} " leftIcon="fas fa-info">
+                    <config-devices-info *ngIf='currDeviceType !== deviceTypes.MESH_ROUTER' [device]='currDevice'
+                        (dirtify)='dirtifyItem($event)'></config-devices-info>
+                    <config-meshrouter-info *ngIf='currDeviceType === deviceTypes.MESH_ROUTER' [router]='currRouter'
+                        (dirtify)='dirtifyItem($event)'></config-meshrouter-info>
+                </p-tabPanel>
+                <p-tabPanel header="{{ 'CONFIG_DEVICES.MEASUREMENTS' | translate}} " leftIcon="fas fa-weight"
+                    [disabled]='currDeviceType === deviceTypes.MESH_ROUTER || currDeviceType === deviceTypes.INTELLICHECK || currDevice?.RowState === rowStates.ADDED'>
+                    <config-devices-measurements [device]='currDevice' [locationID]='locationID'
+                        (dirtify)='dirtifyItem($event)'></config-devices-measurements>
+                </p-tabPanel>
+                <p-tabPanel header="{{ 'CONFIG_DEVICES.INTELLICHECK' | translate}} " leftIcon="fas fa-mortar-pestle"
+                    [disabled]='currDeviceType !== deviceTypes.INTELLICHECK || currDevice?.RowState === rowStates.ADDED'>
+                    <config-intellichecks [device]='currDevice' [checkForms]='locCheckForms'
+                        [allowedUsers]='locAllowedUsers' (dirtify)='dirtifyItem($event)'></config-intellichecks>
+                </p-tabPanel>
+                <p-tabPanel header="{{ 'CONFIG_DEVICES.ROUTERS' | translate}} " leftIcon="fas fa-network-wired"
+                    [disabled]='currDeviceType === deviceTypes.INTELLIGATE || currDeviceType === deviceTypes.INTELLICHECK || currDevice?.RowState === rowStates.ADDED'>
+                    <config-route-records [treeNode]='selectedNode' (dirtify)='dirtifyItem($event)'>
+                    </config-route-records>
+                </p-tabPanel>
+            </p-tabView>
+
+            <div class="buttons-container">
+                <button pButton type="button " label="Generate Identification Code" (click)='generateIDCode()'></button>
+                <label>{{lblGenCode}}</label>
+
+                <button pButton type="button " label="Add Device" (click)='addDevice()'></button>
+                <button pButton type="button " label="Add Child Device"
+                    (click)='addDevice(devicesTree.selection)'></button>
+                <button pButton type="button " label="Remove Device" (click)='removeNode()'></button>
+            </div>
+        </div>
+    </div>
+</app-blocker>

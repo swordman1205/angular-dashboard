@@ -1,0 +1,26 @@
+<div class="ui-g">
+
+    <p-autoComplete
+            [style]="{'color':'#FFF'}" [inputStyle]="{'color':'#FFF'}" class="p-autocomplete"
+            [(ngModel)]="selectedItem"
+            [suggestions]="filteredItemsSingle"
+            (completeMethod)="filterItemsSingle($event)"
+            (onSelect)="onSelect()"
+            field="name"
+            [size]="30"
+            placeholder="Search"
+            [minLength]="1"
+            forceSelection="true">
+
+        <ng-template let-item pTemplate="item">
+            <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                <i class="material-icons" style="margin:5px 0 2px 5px; color: #000">
+                    {{item.type===itemTypes.LOCATION ? 'home' : item.type===itemTypes.ASSET ? 'router' : ''}}</i>
+                <div class="three-dots" style="font-size:14px;float:right;padding:0 10px" pTooltip="{{item.name}}">{{item.name}}</div>
+            </div>
+        </ng-template>
+
+    </p-autoComplete>
+
+    <i class="fa fa-search"></i>
+</div>

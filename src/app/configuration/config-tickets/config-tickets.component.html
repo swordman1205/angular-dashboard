@@ -1,0 +1,115 @@
+<p-blockUI [target]="confgTickets" [blocked]="loading">
+  <i [class]="'fa fa-spinner fa-spin fa-4x fa-fw'" style="position:absolute; top: 40%; left: 30%;"></i>
+</p-blockUI>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<p-toast position="center" key="confirmDialg" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onConfirm()" label="Yes" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="message.data.onReject()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
+
+<app-blocker #confgTickets>
+
+  <!-- <div class="tickets-container"> -->
+
+  <div class="p-grid">
+    <h3>Causes</h3>
+  </div>
+
+  <div class="p-grid">
+    <div class="list-container">
+      <p-listbox [options]="causeItems" [(ngModel)]="selCauses" multiple="multiple" filter="filter" (onChange)="onSelectedCauseChanged($event)"
+        filter="true">
+        <!-- checkbox="checkbox" -->
+        <ng-template let-item let-i="index" pTemplate="item">
+          <div class="ui-helper-clearfix" style="display:inline-block">
+            <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 15px" width="16">
+            <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22"> -->
+            <span style="text-align:left;padding:5px 5px 0 5px">{{item.value.Name}}</span>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
+
+    <div class="details">
+      <div class="content" *ngIf='currCause'>
+
+        <!-- Cause Name -->
+        <div class="p-grid">
+          <div class="ui-grid-col" style="margin:0 15px 35px 0">
+            <label for="name">Name</label>
+          </div>
+          <div class="ui-grid-col">
+            <input id="name" type="text" pInputText [(ngModel)]="currCause.Name" (focus)='onSelectedCauseChanged(null)'
+              (change)='dirtifyItem()'>
+            <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-grid">
+    <h3>Actions</h3>
+  </div>
+
+  <div class="p-grid">
+    <div class="list-container">
+
+      <p-listbox #actionList [options]="actionItems" [(ngModel)]="selActions" multiple="multiple" (onChange)="onSelectedActionChanged($event)"
+        filter="true">
+        <ng-template let-item let-i="index" pTemplate="item">
+          <div class="ui-helper-clearfix" style="display:inline-block">
+            <img src="assets/images/items/location.png" style="display:inline;margin:5px 0 0 15px" width="16">
+            <!-- <img src="assets/images/items/{{item.value.CheckItemImageID}}.png" style="display:inline-block;margin:5px 0 0 5px" width="22">-->
+            <span style="text-align:left;padding:5px 5px 0 5px">{{item.value.Name}}</span>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
+
+    <div class="details">
+      <div class="content" *ngIf='currAction'>
+        <!-- Action Name -->
+        <div class="p-grid">
+          <div class="ui-grid-col" style="margin:0 15px 35px 0">
+            <label for="name">Name</label>
+          </div>
+          <div class="ui-grid-col">
+            <input id="name" type="text" pInputText [(ngModel)]="currAction.Name" (focus)='onSelectedActionChanged(null)'
+              (change)='dirtifyItem()'>
+            <!-- <p-message severity="error" text="Not a valid number" [@errorState]="frmDeviceInfo.dirty && !frmDeviceInfo.valid ? 'visible' : 'hidden'"></p-message> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    <button pButton type="button" label="Add Ticket Cause" (click)='addTicketCause($event)'></button>
+    <button pButton type="button" label="Add Ticket Action" (click)='addTicketAction($event)'></button>
+    <button pButton type="button" label="Merge Ticket Causes" [disabled]='!selCauses || selCauses.length === 1' (click)='mergeTicketCause($event)'></button>
+    <button pButton type="button" label="Merge Ticket Actions" [disabled]='!selActions || selActions.length === 1'
+      (click)='mergeTicketAction($event)'></button>
+    <button pButton type="button" label="Remove Ticket Cause" [disabled]='!selCauses || selCauses.length !== 1' (click)='removeTicketCause($event)'></button>
+    <button pButton type="button" label="Remove Ticket Action" [disabled]='!selActions || selActions.length !== 1'
+      (click)='removeTicketAction($event)'></button>
+
+  </div>
+
+</app-blocker>
