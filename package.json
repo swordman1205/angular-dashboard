@@ -48,7 +48,7 @@
     "devextreme-intl": "^18.2.9",
     "highcharts": "^6.2.0",
     "highcharts-more": "^0.1.7",
-    "jquery": "3.4.0",
+    "jquery": "3.5.0",
     "jshint": "^2.10.2",
     "lodash": "^4.17.10",
     "moment": "^2.24.0",
