@@ -46,7 +46,7 @@
     "devextreme": "^18.2.9",
     "devextreme-angular": "^18.2.9",
     "devextreme-intl": "^18.2.9",
-    "highcharts": "^6.2.0",
+    "highcharts": "^7.2.2",
     "highcharts-more": "^0.1.7",
     "jquery": "3.4.0",
     "jshint": "^2.10.2",
